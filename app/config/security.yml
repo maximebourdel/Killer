@@ -2,11 +2,29 @@ security:
     providers:
         in_memory:
             memory: ~
+        main:
+            id: fos_user.user_provider.username
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        default:
-            anonymous: ~
+        
+        # … le pare-feu « dev »
+        # Firewall principal pour le reste de notre site
+        main:
+            pattern:        ^/
+            anonymous:      true
+            provider:       main
+            form_login:
+                login_path: fos_user_security_login
+                check_path: fos_user_security_check
+            logout:
+                path:       fos_user_security_logout
+                target:     /platform
+            remember_me:
+                key:        "%secret%" # %secret% est un paramètre de parameters.yml
+        
+    encoders:
+        Games\UserBundle\Entity\User: sha512
