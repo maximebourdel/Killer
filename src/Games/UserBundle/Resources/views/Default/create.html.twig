@@ -1,0 +1,14 @@
+{# On étend notre layout #}
+{% extends "::layout.html.twig" %}
+
+
+
+{# Dans notre layout, il faut définir le block body #}
+{% block body %}
+<h3>Formulaire d'annonce</h3>
+
+<div class="well">
+  {{ form(form) }}
+</div>
+
+{% endblock %}

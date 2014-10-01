@@ -10,4 +10,6 @@ class DefaultController extends Controller
     {
         return $this->render('GamesKillerBundle:Default:index.html.twig', array('name' => $name));
     }
+    
+    
 }
