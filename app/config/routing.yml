@@ -1,3 +1,7 @@
+games_user:
+    resource: "@GamesUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
 games_killer:
     resource: "@GamesKillerBundle/Resources/config/routing.yml"
     prefix:   /
