@@ -1,0 +1,3 @@
+games_killer_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: GamesKillerBundle:Default:index }

@@ -1,0 +1,4 @@
+games_killer:
+    resource: "@GamesKillerBundle/Resources/config/routing.yml"
+    prefix:   /
+
