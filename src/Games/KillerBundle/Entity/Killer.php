@@ -37,20 +37,43 @@ class Killer {
 	private $name;
 	
 	/**
+	 * @ORM\Column(name="nbParticipants", type="integer")
+	 */
+	private $nbParticipants;
+	
+	/**
      * @var \DateTime
 	 *
-	 * @ORM\Column(name="dateBegin", type="datetime")
-	 * @Assert\DateTime()
+	 * @ORM\Column(name="dateBegin", type="datetime", nullable=true)
 	 */
 	private $dateBegin;
 	
 	/**
      * @var \DateTime
 	 *
-	 * @ORM\Column(name="dateEnd", type="datetime")
-	 * @Assert\DateTime()
+	 * @ORM\Column(name="dateEnd", type="datetime", nullable=true)
 	 */
 	private $dateEnd;
+	
+	
+	
+	
+	
+	// Et modifions le constructeur pour mettre cet attribut publication à true par défaut
+	public function __construct()
+	{
+	    $this->nbParticipants = 0;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * Get id
@@ -83,23 +106,77 @@ class Killer {
 	}
 	
 	/**
-	 * Set user
+	 * Set userAdmin
 	 *
-	 * @param Sdz\BlogBundle\Entity\User $user
+	 * @param Sdz\BlogBundle\Entity\User $userAdmin
 	 */
-	public function setUser(\Games\UserBundle\Entity\User $user)
+	public function setUser(\Games\UserBundle\Entity\User $userAdmin)
 	{
-	    $this->user = $user;
+	    $this->userAdmin = $userAdmin;
 	}
 	
 	/**
-	 * Get user
+	 * Get userAdmin
 	 *
 	 * @return Sdz\BlogBundle\Entity\User
 	 */
-	public function getUser()
+	public function getUserAdmin()
 	{
-	    return $this->user;
+	    return $this->userAdmin;
+	}
+	
+	/**
+	 * Get nbParticipants
+	 *
+	 * @return Sdz\BlogBundle\Entity\User
+	 */
+	public function getNbParticipants()
+	{
+	    return $this->nbParticipants;
+	}
+	
+	
+	/**
+	 * Set dateBegin
+	 *
+	 * @param string $dateBegin
+	 * @return Killer
+	 */
+	public function setDateBegin($dateBegin) {
+	    $this->dateBegin = $dateBegin;
+	
+	    return $this;
+	}
+	
+	/**
+	 * Get dateBegin
+	 *
+	 * @return string
+	 */
+	public function getdDateBegin() {
+	    return $this->dateBegin;
+	}
+	
+
+	/**
+	 * Set dateEnd
+	 *
+	 * @param string $dateEnd
+	 * @return Killer
+	 */
+	public function setDateEnd($dateEnd) {
+	    $this->dateEnd = $dateEnd;
+	
+	    return $this;
+	}
+	
+	/**
+	 * Get dateEnd
+	 *
+	 * @return string
+	 */
+	public function getdDateEnd() {
+	    return $this->dateEnd;
 	}
 	
 }

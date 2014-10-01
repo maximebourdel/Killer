@@ -20,17 +20,27 @@ class User extends BaseUser
   
   
   /**
-   * Représente les
+   * Représente la liste des killers d'un user
    * 
    * @ORM\OneToMany(targetEntity="Games\KillerBundle\Entity\Killer", mappedBy="userAdmin")
    */
   private $myKillers; //avec un s car plusieurs
   
   
-  public function createKiller(\Games\KillerBundle\Entity\Killer $killer)
+  public function addMyKiller(\Games\KillerBundle\Entity\Killer $killer)
   {
-      $this->killers[] = $killer;
-      $killers->setUser($this); // On ajoute ceci
+      $this->myKillers[] = $killer;
+      $killer->setUser($this); // On ajoute ceci
       return $this;
+  }
+  
+  public function removeMyKiller(Killer $killer)
+  {
+      $this->myKillers->removeElement($killer);
+  }
+  
+  public function getMyKillers()
+  {
+      return $this->myKillers;
   }
 }
