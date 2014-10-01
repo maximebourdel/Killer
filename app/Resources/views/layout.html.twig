@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<script src="//code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+		
+		{% stylesheets 
+			filter='cssrewrite,?yui_css' '@MopaBootstrapBundle/Resources/bootstrap/dist/css/*'%}
+			<link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+		{% endstylesheets %}
+		{% stylesheets 
+			filter='cssrewrite,?yui_css' '@MopaBootstrapBundle/Resources/bootstrap/docs/assets/css/*'%}
+			<link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+		{% endstylesheets %}
+		
+		{% javascripts
+       		'@MopaBootstrapBundle/Resources/bootstrap/js/*'
+   		%}
+        	<script src="{{ asset_url }}"></script>
+    	{% endjavascripts %}
+
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>{% block title %}Killer{% endblock %}</title>
+		
+	</head>
+  <body>
+  
+	  <nav role="navigation" class="navbar navbar-inverse">
+		<div class="container-fluid">
+	 		<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">	    	
+	            	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        Connecté en tant que {{ app.user.username }} - <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+                    {% else %}
+                        <a href="{{ path('fos_user_security_login') }}">Connexion</a>
+                    {% endif %}
+	          	</ul>
+	        </div><!-- /.navbar-collapse -->
+	 	</div><!-- /.container-fluid -->
+	</nav>
+  	
+  	<h1>Killer</h1>
+    {% block body %}
+	    	
+    {% endblock %}
+    
+    <div class="container">
+        <br />
+        <br />
+    	© Maxime Bourdel 2014 Tous droits réservés
+    </div>
+  
+  </body>
+</html>
+
+

@@ -21,7 +21,12 @@
 		"sensio/distribution-bundle" : "~3.0",
 		"sensio/framework-extra-bundle" : "~3.0",
 		"incenteev/composer-parameter-handler" : "~2.0",
-		"friendsofsymfony/user-bundle": "2.0.*@dev"
+		
+		"friendsofsymfony/user-bundle" : "2.0.*@dev",
+		
+		"twitter/bootstrap" : "v3.0.0",
+		"twbs/bootstrap" : "3.2.*@dev",
+		"mopa/bootstrap-bundle" : "2.3.*@dev"
 	},
 	"require-dev" : {
 		"sensio/generator-bundle" : "~2.3"
@@ -33,7 +38,8 @@
 			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
 			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
 			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles"
+			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
+			"Mopa\\Bundle\\BootstrapBundle\\Composer\\ScriptHandler::postInstallSymlinkTwitterBootstrap"
 		],
 		"post-update-cmd" : [
 			"Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
@@ -41,7 +47,8 @@
 			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
 			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
 			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles"
+			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
+			"Mopa\\Bundle\\BootstrapBundle\\Composer\\ScriptHandler::postInstallSymlinkTwitterBootstrap"
 		]
 	},
 	"config" : {
