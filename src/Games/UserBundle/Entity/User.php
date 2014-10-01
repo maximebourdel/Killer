@@ -18,5 +18,19 @@ class User extends BaseUser
    */
   protected $id;
   
- 
+  
+  /**
+   * Représente les
+   * 
+   * @ORM\OneToMany(targetEntity="Games\KillerBundle\Entity\Killer", mappedBy="userAdmin")
+   */
+  private $myKillers; //avec un s car plusieurs
+  
+  
+  public function createKiller(\Games\KillerBundle\Entity\Killer $killer)
+  {
+      $this->killers[] = $killer;
+      $killers->setUser($this); // On ajoute ceci
+      return $this;
+  }
 }
