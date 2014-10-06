@@ -1,0 +1,28 @@
+{# On étend notre layout #}
+{% extends "::layout.html.twig" %}
+
+
+
+{# Dans notre layout, il faut définir le block body #}
+{% block body %}
+<div class="container">
+    <h3>Voici la liste de vos Killers!</h3>
+    <ul>
+    	{% for killer in killers %}
+    	{# On inclut la vue à chaque itération dans la boucle #}
+    		<div class="container">
+    			<p>
+    			    {{ killer.name }}
+    			<p>
+    		</div>
+    		<hr />
+    	{% else %}
+    		<p>
+    		  Pas (encore !) de Killer? Allez Hop, par ici
+    		  <a href="{{ path('games_killer_createKiller' ) }}">Exprimez-vous</a>
+    		</p>
+    	{% endfor %}
+    </ul>
+
+</div>
+{% endblock %}

@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use Games\UserBundle\Form\User;
 use Games\KillerBundle\Entity\Killer;
+use Games\KillerBundle\Entity\KillerRepository;
 use Games\KillerBundle\Form\KillerType;
 
 class DefaultController extends Controller
@@ -51,14 +52,39 @@ class DefaultController extends Controller
             
             $em->persist($killer);
             $em->flush();
-    
-            //return $this->redirect($this->generateUrl('oc_platform_view', array('id' => $advert->getId())));
-        }
+               
+            return $this->redirect($this->generateUrl('games_killer_consultKiller', array('name' => $killer->getName())));
+       }
     
         return $this->render('GamesKillerBundle:Default:createKiller.html.twig', array(
                 'form' => $form->createView(),
         ));
     }
     
+    //cette méthode affiche le contenu d'un Killer
+    public function consultKillerAction($name)
+    {
+        $killer = $this->getDoctrine()
+        ->getRepository('GamesKillerBundle:Killer')
+        ->findOneByName($name);
+        
+		// Puis modifiez la ligne du render comme ceci, pour prendre en compte les variables :
+		return $this->render ( 'GamesKillerBundle:Default:consultKiller.html.twig', array (
+				'killer' => $killer,
+		) );
+    }
     
+    //cette méthode affiche la liste des Killers
+    public function consultListKillersAction()
+    {
+        $killers = $this->getDoctrine()
+        ->getRepository('GamesKillerBundle:Killer')
+        ->findAll();
+    
+        // Puis modifiez la ligne du render comme ceci, pour prendre en compte les variables :
+        return $this->render ( 'GamesKillerBundle:Default:consultListKillers.html.twig', array (
+                'killers' => $killers,
+        ) );
+    }
+   
 }

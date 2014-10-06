@@ -6,3 +6,10 @@ games_killer_createKiller:
     path:     /newKiller
     defaults: { _controller: GamesKillerBundle:Default:createKiller }
     
+games_killer_consultKiller:
+    path:     /myKillers/{name}
+    defaults: { _controller: GamesKillerBundle:Default:consultKiller }
+    
+games_killer_consultListKillers:
+    path:     /myKillers
+    defaults: { _controller: GamesKillerBundle:Default:consultListKillers }

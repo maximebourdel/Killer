@@ -5,6 +5,8 @@ namespace Games\KillerBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+use Games\UserBundle\Entity\User;
+
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -12,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Killer
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Sdz\BlogBundle\Entity\KillerRepository")
+ * @ORM\Entity(repositoryClass="Games\KillerBundle\Entity\KillerRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class Killer {
@@ -32,7 +34,7 @@ class Killer {
 	
 	/**
 	 *
-	 * @var string @ORM\Column(name="name", type="string", length=255)
+	 * @var string @ORM\Column(name="name", type="string", length=255, unique=true)
 	 */
 	private $name;
 	
@@ -108,7 +110,7 @@ class Killer {
 	/**
 	 * Set userAdmin
 	 *
-	 * @param Sdz\BlogBundle\Entity\User $userAdmin
+	 * @param Games\UserBundle\Entity\User $userAdmin
 	 */
 	public function setUser(\Games\UserBundle\Entity\User $userAdmin)
 	{
@@ -118,7 +120,7 @@ class Killer {
 	/**
 	 * Get userAdmin
 	 *
-	 * @return Sdz\BlogBundle\Entity\User
+	 * @return Games\UserBundle\Entity\User
 	 */
 	public function getUserAdmin()
 	{
@@ -128,7 +130,7 @@ class Killer {
 	/**
 	 * Get nbParticipants
 	 *
-	 * @return Sdz\BlogBundle\Entity\User
+	 * @return Games\UserBundle\Entity\User
 	 */
 	public function getNbParticipants()
 	{

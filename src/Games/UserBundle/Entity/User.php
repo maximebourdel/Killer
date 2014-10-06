@@ -6,6 +6,8 @@ namespace Games\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
+use Games\KillerBundle\Entity\Killer;
+
 /**
  * @ORM\Entity
  */
