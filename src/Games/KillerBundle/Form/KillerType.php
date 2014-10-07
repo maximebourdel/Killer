@@ -12,6 +12,9 @@ class KillerType extends AbstractType
   {
     $builder
       ->add('name',     'text')
+      ->add('adresse',  'text', array('read_only' => true))
+      ->add('latitude',  'hidden')
+      ->add('longitude',  'hidden')
       ->add('save',     'submit')
     ;
   }

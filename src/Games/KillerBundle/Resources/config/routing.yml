@@ -1,5 +1,5 @@
-games_killer_homepage:
-    path:     /hello/{name}
+games_killer_index:
+    path:     /
     defaults: { _controller: GamesKillerBundle:Default:index }
 
 games_killer_createKiller:

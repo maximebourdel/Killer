@@ -12,7 +12,7 @@
     	{# On inclut la vue à chaque itération dans la boucle #}
     		<div class="container">
     			<p>
-    			    {{ killer.name }}
+    			     <a href="{{ path('games_killer_consultKiller', {'name': killer.name} ) }}">{{ killer.name }}</a>
     			<p>
     		</div>
     		<hr />
@@ -25,4 +25,9 @@
     </ul>
 
 </div>
+{% endblock %}
+
+
+{% block script %}
+    <script> $('#consultListKiller').addClass('active')</script>
 {% endblock %}

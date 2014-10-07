@@ -15,9 +15,15 @@ use Games\KillerBundle\Form\KillerType;
 
 class DefaultController extends Controller
 {
-    public function indexAction($name)
+    public function indexAction(Request $request)
     {
-        return $this->render('GamesKillerBundle:Default:index.html.twig', array('name' => $name));
+        $killers = $this->getDoctrine()
+        ->getRepository('GamesKillerBundle:Killer')
+        ->findAll();
+        
+        return $this->render('GamesKillerBundle:Default:index.html.twig', array (
+                'killers' => $killers,
+        ) );
     }
     
     
@@ -43,14 +49,13 @@ class DefaultController extends Controller
     
         if ($form->handleRequest($request)->isValid()) {
             
-            
             $em = $this->getDoctrine()->getManager();
             
             $user->addMyKiller($killer);
             
             $em->persist($user);
-            
             $em->persist($killer);
+            
             $em->flush();
                
             return $this->redirect($this->generateUrl('games_killer_consultKiller', array('name' => $killer->getName())));
@@ -77,10 +82,20 @@ class DefaultController extends Controller
     //cette méthode affiche la liste des Killers
     public function consultListKillersAction()
     {
+        // On vérifie que l'utilisateur dispose bien du rôle ROLE_AUTEUR
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('Accès limité aux personnes authentifiées.');
+        }
+        
+        // On récupere l'utilisateur actuel
+        $userId = $this->get('security.context')->getToken()->getUser()->getId();
+        
         $killers = $this->getDoctrine()
         ->getRepository('GamesKillerBundle:Killer')
-        ->findAll();
-    
+        ->findBy(
+            array('userAdmin' => $userId)
+        );
         // Puis modifiez la ligne du render comme ceci, pour prendre en compte les variables :
         return $this->render ( 'GamesKillerBundle:Default:consultListKillers.html.twig', array (
                 'killers' => $killers,

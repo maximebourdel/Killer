@@ -9,7 +9,20 @@
     <h3>{{ killer.name }}</h3>
     
     <div class="well">
+      {% if killer.dateBegin is not null %}
+        Date debut du Killer : {{ killer.dateBegin|date('Y-m-d') }}
+      {% endif %}
+      <br />
+      {% if killer.dateEnd is not null %}
+        Date fin du Killer : {{ killer.dateEnd|date('Y-m-d H:i:s') }}
+      {% endif %}
       
+      <br />
+      {{ killer.adresse }}
     </div>
 </div>
+{% endblock %}
+
+{% block script %}
+    <script> $('#consultKiller').addClass('active')</script>
 {% endblock %}
