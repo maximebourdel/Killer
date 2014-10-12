@@ -19,7 +19,20 @@
       
       <br />
       {{ killer.adresse }}
+      
+       <br />
+      
+      
+      
     </div>
+    {{ form_start(form) }}
+    
+    {# Les erreurs générales du formulaire. #}
+    {{ form_errors(form) }}
+    {{ form_widget(form.save) }}
+    
+    {# Fermeture de la balise <form> du formulaire HTML #}
+    {{ form_end(form) }}
 </div>
 {% endblock %}
 

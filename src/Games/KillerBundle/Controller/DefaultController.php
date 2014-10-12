@@ -8,10 +8,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
-use Games\UserBundle\Form\User;
+use Games\UserBundle\Entity\User;
+use Games\UserBundle\Form\UserType;
+
 use Games\KillerBundle\Entity\Killer;
 use Games\KillerBundle\Entity\KillerRepository;
 use Games\KillerBundle\Form\KillerType;
+
+use Games\KillerBundle\Entity\Player;
+use Games\KillerBundle\Form\PlayerType;
 
 class DefaultController extends Controller
 {
@@ -67,15 +72,39 @@ class DefaultController extends Controller
     }
     
     //cette méthode affiche le contenu d'un Killer
-    public function consultKillerAction($name)
+    public function consultKillerAction(Request $request, $name)
     {
         $killer = $this->getDoctrine()
-        ->getRepository('GamesKillerBundle:Killer')
-        ->findOneByName($name);
+            ->getRepository('GamesKillerBundle:Killer')
+            ->findOneByName($name);
+        
+        // On récupere l'utilisateur actuel
+        $user = $this->get('security.context')->getToken()->getUser();
+        
+        $player = new Player();
+        
+        $form = $this->get('form.factory')->create(new PlayerType, $player);
+        
+        if ($form->handleRequest($request)->isValid()) {
+        
+            $em = $this->getDoctrine()->getManager();
+        
+            
+            $player->setKiller($killer);
+            $player->setUser($user);
+        
+            $em->persist($player);
+        
+            $em->flush();
+             
+            return $this->redirect($this->generateUrl('games_killer_consultKiller', array('name' => $killer->getName())));
+        }
+        
         
 		// Puis modifiez la ligne du render comme ceci, pour prendre en compte les variables :
 		return $this->render ( 'GamesKillerBundle:Default:consultKiller.html.twig', array (
 				'killer' => $killer,
+		        'form' => $form->createView(),
 		) );
     }
     

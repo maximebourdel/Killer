@@ -4,6 +4,7 @@
 namespace Games\KillerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -47,13 +48,115 @@ class Player
     /**
      * @var \DateTime
 	 *
-	 * @ORM\Column(name="deathDate", type="datetime")
-	 * @Assert\DateTime()
+	 * @ORM\Column(name="deathDate", type="datetime", nullable=true)
 	 */
     private $deathDate;
     
     /**
+     * @var \DateTime
+     * 
      * @ORM\Column(name="isDead", type="boolean")
      */
     private $isDead;
+    
+    /**
+     * @ORM\Column(name="isAllowed", type="boolean")
+     */
+    private $isAllowed;
+
+    
+    public function __construct()
+    {
+        $this->numkills = 0;
+        
+    }
+    
+    
+    public function getId ()
+    {
+        return $this->id;
+    }
+
+    public function setId ($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    public function getUser ()
+    {
+        return $this->user;
+    }
+
+    public function setUser ($user)
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    public function getKiller ()
+    {
+        return $this->killer;
+    }
+
+    public function setKiller ($killer)
+    {
+        $this->killer = $killer;
+        return $this;
+    }
+
+    public function getNumkills ()
+    {
+        return $this->numkills;
+    }
+
+    public function setNumkills ($numkills)
+    {
+        $this->numkills = $numkills;
+        return $this;
+    }
+
+    public function getPassword ()
+    {
+        return $this->password;
+    }
+
+    public function setPassword ($password)
+    {
+        $this->password = $password;
+        return $this;
+    }
+
+    public function getDeathDate ()
+    {
+        return $this->deathDate;
+    }
+
+    public function setDeathDate ($deathDate)
+    {
+        $this->deathDate = $deathDate;
+        return $this;
+    }
+
+    public function getIsDead ()
+    {
+        return $this->isDead;
+    }
+
+    public function setIsDead ($isDead)
+    {
+        $this->isDead = $isDead;
+        return $this;
+    }
+
+    public function getIsAllowed ()
+    {
+        return $this->isAllowed;
+    }
+
+    public function setIsAllowed ($isAllowed)
+    {
+        $this->isAllowed = $isAllowed;
+        return $this;
+    }
 }

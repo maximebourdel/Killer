@@ -20,6 +20,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity(fields="name", message="Un autre killer de ce nom existe déja.")
  */
 class Killer {
+	
 	/**
 	 *
 	 * @var integer @ORM\Column(name="id", type="integer")
@@ -33,6 +34,7 @@ class Killer {
 	 * @ORM\JoinColumn(nullable=false)
 	 */
 	private $userAdmin;
+	
 	
 	/**
 	 *
@@ -77,7 +79,10 @@ class Killer {
 	 */
 	private $longitude;
 	
-	// Et modifions le constructeur pour mettre cet attribut publication à true par défaut
+	
+	
+	
+	
 	public function __construct()
 	{
 	    $this->nbParticipants = 0;
@@ -259,4 +264,16 @@ class Killer {
 	public function getLongitude() {
 	    return $this->longitude;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
