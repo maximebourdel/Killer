@@ -29,6 +29,13 @@ class User extends BaseUser
   private $myKillers; //avec un s car plusieurs
   
   
+  /**
+  * @ORM\OneToMany(targetEntity="Games\KillerBundle\Entity\Player", mappedBy="user")
+  * @ORM\JoinColumn(nullable=false)
+  */
+  private $players;
+  
+ 
   public function addMyKiller(\Games\KillerBundle\Entity\Killer $killer)
   {
       $this->myKillers[] = $killer;
@@ -45,4 +52,8 @@ class User extends BaseUser
   {
       return $this->myKillers;
   }
+  
+  
+  
+  
 }

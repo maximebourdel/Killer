@@ -16,7 +16,11 @@ use Games\KillerBundle\Entity\KillerRepository;
 use Games\KillerBundle\Form\KillerType;
 
 use Games\KillerBundle\Entity\Player;
+use Games\KillerBundle\Entity\PlayerRepository;
 use Games\KillerBundle\Form\PlayerType;
+use Games\KillerBundle\Form\PlayerEnablingType;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class DefaultController extends Controller
 {
@@ -74,6 +78,7 @@ class DefaultController extends Controller
     //cette méthode affiche le contenu d'un Killer
     public function consultKillerAction(Request $request, $name)
     {
+        //on récupere les valeurs du killer
         $killer = $this->getDoctrine()
             ->getRepository('GamesKillerBundle:Killer')
             ->findOneByName($name);
@@ -81,14 +86,12 @@ class DefaultController extends Controller
         // On récupere l'utilisateur actuel
         $user = $this->get('security.context')->getToken()->getUser();
         
+        
+        //On gere la création du formulaire d'un nouveau player
         $player = new Player();
-        
-        $form = $this->get('form.factory')->create(new PlayerType, $player);
-        
-        if ($form->handleRequest($request)->isValid()) {
-        
+        $formParticipation = $this->get('form.factory')->create(new PlayerType, $player);
+        if ($formParticipation->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
-        
             
             $player->setKiller($killer);
             $player->setUser($user);
@@ -98,13 +101,58 @@ class DefaultController extends Controller
             $em->flush();
              
             return $this->redirect($this->generateUrl('games_killer_consultKiller', array('name' => $killer->getName())));
+        } 
+        
+        //si la personne a déja participé, on définit à null le player
+        $isPlayerExists = $this->getDoctrine()
+            ->getRepository('GamesKillerBundle:Player')
+            ->findBy(array(
+                    'user' => $user,
+                    'killer' => $killer
+            ));
+        if ( $isPlayerExists != null ){ $player = null; }
+        
+        
+        
+        //on liste les gens qui veulent participer
+        $participants = $this->getDoctrine()
+        ->getRepository('GamesKillerBundle:Player')
+        ->findBy(array(
+                'killer' => $killer,
+        ));
+        
+        
+        $i=0;
+        foreach ($participants as $participant){
+            
+            $formParticipants[] = $this->get('form.factory')->create(new PlayerEnablingType, $participant);
+            
+            if ($formParticipants[$i]->handleRequest($request)->isValid()) {
+                
+                $em = $this->getDoctrine()->getManager();
+                
+                $em->persist($participants[$i]);
+                
+                $em->flush();
+                
+                return $this->redirect($this->generateUrl('games_killer_consultKiller', array('name' => $killer->getName())));
+            }
+            
+            $formParticipants[$i] = $formParticipants[$i]->createView();
+            $i++;
         }
+        
+       
         
         
 		// Puis modifiez la ligne du render comme ceci, pour prendre en compte les variables :
 		return $this->render ( 'GamesKillerBundle:Default:consultKiller.html.twig', array (
 				'killer' => $killer,
-		        'form' => $form->createView(),
+		        'formParticipation' => $formParticipation->createView(),
+		        'formParticipants' => $formParticipants,
+		        'user' => $user,
+		        'player' => $player,
+		        'participants' => $participants,
 		) );
     }
     
@@ -130,5 +178,4 @@ class DefaultController extends Controller
                 'killers' => $killers,
         ) );
     }
-   
 }

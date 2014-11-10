@@ -35,6 +35,12 @@ class Killer {
 	 */
 	private $userAdmin;
 	
+	/**
+	 * @ORM\OneToMany(targetEntity="Games\KillerBundle\Entity\Player", mappedBy="killer")
+	 * @ORM\JoinColumn(nullable=false)
+	 */
+	private $players;
+	
 	
 	/**
 	 *
@@ -265,15 +271,8 @@ class Killer {
 	    return $this->longitude;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public function getPlayers()
+	{
+	    return $this->players;
+	}
 }

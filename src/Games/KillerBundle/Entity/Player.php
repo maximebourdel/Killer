@@ -24,13 +24,13 @@ class Player
     
 
     /**
-     * @ORM\ManyToOne(targetEntity="Games\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Games\UserBundle\Entity\User", inversedBy="players")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Games\KillerBundle\Entity\Killer")
+     * @ORM\ManyToOne(targetEntity="Games\KillerBundle\Entity\Killer", inversedBy="players")
      * @ORM\JoinColumn(nullable=false)
      */
     private $killer;
@@ -41,7 +41,7 @@ class Player
     private $numkills;
     
     /**
-     * @ORM\Column(name="password", type="string", length=6)
+     * @ORM\Column(name="password", type="string", length=6, nullable=true)
      */
     private $password;
     
@@ -68,6 +68,9 @@ class Player
     public function __construct()
     {
         $this->numkills = 0;
+        $this->isDead = false;
+        $this->isAllowed = false;
+        
         
     }
     

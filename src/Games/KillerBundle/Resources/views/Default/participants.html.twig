@@ -1,0 +1,21 @@
+{# src/Sdz/BlogBundle/Resources/views/Blog/article.html.twig #}
+
+<h5>Liste d'attente des participants</h5>
+
+
+
+<div class="well">
+  {{ participant.user.username }}
+  
+  {{ form_start(formParticipants[i]) }}
+    
+    {# Les erreurs générales du formulaire. #}
+    {{ form_errors(formParticipants[i]) }}
+    {{ form_widget(formParticipants[i].save) }}
+    
+    {# Fermeture de la balise <form> du formulaire HTML #}
+  {{ form_end(formParticipants[i]) }}
+    
+      
+</div>
+

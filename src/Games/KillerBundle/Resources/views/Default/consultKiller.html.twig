@@ -8,6 +8,7 @@
 <div class="container">
     <h3>{{ killer.name }}</h3>
     
+    
     <div class="well">
       {% if killer.dateBegin is not null %}
         Date debut du Killer : {{ killer.dateBegin|date('Y-m-d') }}
@@ -16,23 +17,46 @@
       {% if killer.dateEnd is not null %}
         Date fin du Killer : {{ killer.dateEnd|date('Y-m-d H:i:s') }}
       {% endif %}
-      
+      {% if killer.dateBegin is not null %}
+        Est créé par {{ killer.dateBegin|date('Y-m-d') }}
+      {% endif %}
       <br />
       {{ killer.adresse }}
-      
-       <br />
+      <br />
       
       
       
     </div>
-    {{ form_start(form) }}
     
-    {# Les erreurs générales du formulaire. #}
-    {{ form_errors(form) }}
-    {{ form_widget(form.save) }}
+    {# On n'affiche pas le formulaire si l'utilisateur n'est pas admin 
+    ET si participe déja #}
+    {% if user is not null %}
+        {% if killer.userAdmin.id != user.id and player is not null %}
+            {{ form_start(formParticipation) }}
+            
+            {# Les erreurs générales du formulaire. #}
+            {{ form_errors(formParticipation) }}
+            {{ form_widget(formParticipation.save) }}
+            
+            {# Fermeture de la balise <form> du formulaire HTML #}
+            {{ form_end(formParticipation) }}
+        {% endif %}
+    {% endif %}
     
-    {# Fermeture de la balise <form> du formulaire HTML #}
-    {{ form_end(form) }}
+    {# On n'affiche les droits de gestion des participants #}
+    {% if killer.userAdmin.id == user.id %}
+        <ul>
+      		{% for i, participant in participants %}
+        	    {# On inclut la vue à chaque itération dans la boucle #}
+        			{% include "GamesKillerBundle:Default:participants.html.twig" %}
+        		<hr />
+      		{% else %}
+        		<p>Pas (encore !) de participants :(</p>
+      		{% endfor %}
+    	</ul>
+	
+    {% endif %}
+        
 </div>
 {% endblock %}
 
