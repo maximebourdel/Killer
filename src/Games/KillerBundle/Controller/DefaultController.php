@@ -87,10 +87,11 @@ class DefaultController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
         
         
-        //On gere la création du formulaire d'un nouveau player
+        //On gere la création du formulaire d'un nouveau participant
         $player = new Player();
         $formParticipation = $this->get('form.factory')->create(new PlayerType, $player);
         if ($formParticipation->handleRequest($request)->isValid()) {
+            
             $em = $this->getDoctrine()->getManager();
             
             $player->setKiller($killer);
@@ -122,16 +123,19 @@ class DefaultController extends Controller
         ));
         
         
-        $i=0;
-        foreach ($participants as $participant){
+        foreach ($participants as $i => $participant ){
             
-            $formParticipants[] = $this->get('form.factory')->create(new PlayerEnablingType, $participant);
+            $formType = new PlayerEnablingType($i);
+            
+            
+            $formParticipants[] = $this->get('form.factory')->create($formType, $participant);
+            
             
             if ($formParticipants[$i]->handleRequest($request)->isValid()) {
                 
                 $em = $this->getDoctrine()->getManager();
                 
-                $em->persist($participants[$i]);
+                $em->persist($participant);
                 
                 $em->flush();
                 
@@ -139,11 +143,9 @@ class DefaultController extends Controller
             }
             
             $formParticipants[$i] = $formParticipants[$i]->createView();
-            $i++;
+
         }
-        
-       
-        
+
         
 		// Puis modifiez la ligne du render comme ceci, pour prendre en compte les variables :
 		return $this->render ( 'GamesKillerBundle:Default:consultKiller.html.twig', array (
@@ -155,6 +157,10 @@ class DefaultController extends Controller
 		        'participants' => $participants,
 		) );
     }
+    
+    
+    
+    
     
     //cette méthode affiche la liste des Killers
     public function consultListKillersAction()

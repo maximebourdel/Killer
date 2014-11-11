@@ -46,6 +46,7 @@
     {# On n'affiche les droits de gestion des participants #}
     {% if killer.userAdmin.id == user.id %}
         <ul>
+            <h5>Liste d'attente des participants</h5>
       		{% for i, participant in participants %}
         	    {# On inclut la vue à chaque itération dans la boucle #}
         			{% include "GamesKillerBundle:Default:participants.html.twig" %}

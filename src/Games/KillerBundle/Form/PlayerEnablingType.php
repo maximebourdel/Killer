@@ -8,6 +8,14 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class PlayerEnablingType extends AbstractType
 {
+  
+    private static $count = 0;
+    private $suffix;
+    
+    public function __construct() {
+        $this->suffix = self::$count++;
+    }
+    
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
       $builder
@@ -30,6 +38,8 @@ class PlayerEnablingType extends AbstractType
 
   public function getName()
   {
-    return 'games_killerbundle_player';
+    return 'games_killerbundle_enablingPlayer'.$this->suffix;
   }
+  
+  
 }
