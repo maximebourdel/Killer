@@ -133,6 +133,7 @@ class DefaultController extends Controller
 
        
         $participants = null;
+        $formParticipants[] = null;
         //on est à l'étape ou le jeu n'est pas commencé (participation)
         if($killer->getDateBegin() == null){ 
             
