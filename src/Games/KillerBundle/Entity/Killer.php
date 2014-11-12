@@ -155,6 +155,18 @@ class Killer {
 	}
 	
 	/**
+	 * Set nbParticipants
+	 *
+	 * @param string $nbParticipants
+	 * @return Killer
+	 */
+	public function setNbParticipants($nbParticipants) {
+	    $this->nbParticipants = $nbParticipants;
+	
+	    return $this;
+	}
+	
+	/**
 	 * Get nbParticipants
 	 *
 	 * @return Games\UserBundle\Entity\User

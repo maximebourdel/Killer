@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+use Games\KillerBundle\Password\Password;
 
 use Games\UserBundle\Entity\User;
 use Games\UserBundle\Form\UserType;
@@ -178,7 +179,7 @@ class DefaultController extends Controller
             
             $allowedPlayers = $this->getDoctrine()
             ->getRepository('GamesKillerBundle:Player')
-            ->findAllowedPlayers($killer);
+            ->findAllowedPlayers($killer->getId());
             
             
             
@@ -221,25 +222,32 @@ class DefaultController extends Controller
     public function setKillerOnAction(Request $request, $id)
     {
         //on récupere les valeurs du killer
+        $allowedPlayers = $this->getDoctrine()
+        ->getRepository('GamesKillerBundle:Player')
+        ->findAllowedPlayers($id);
+        
         $killer = $this->getDoctrine()
         ->getRepository('GamesKillerBundle:Killer')
         ->findOneById($id);
         
         
-        foreach ($killer->getPlayers() as $player){
+        foreach ($allowedPlayers as $allowedPlayer){
             
-           $player->setPassword("lol");
-            
-            
+           //génération du password
+           $password = new Password();
+           $allowedPlayer->setPassword( $password->generateNewPassword() );
+           
            $em = $this->getDoctrine()->getManager();
                     
-           $em->persist($player);
-                    
+           $em->persist($allowedPlayer);
           
         }
         
-        
+        //on redéfinit les participants et la date du début
+        $killer->setNbParticipants( count($allowedPlayers) );
         $killer->setDateBegin(new \Datetime());
+        
+        $em->persist($killer);
         
         $em->flush();
         

@@ -14,13 +14,13 @@ use Games\KillerBundle\Entity\Killer;
  */
 class PlayerRepository extends EntityRepository
 {
-    public function findAllowedPlayers(Killer $killer)
+    public function findAllowedPlayers($killerId)
     {
           $qb = $this->createQueryBuilder('p');
           
           $qb->where('p.isAllowed = true')
              ->andWhere('p.killer = :id')
-             ->setParameter('id', $killer->getId())
+             ->setParameter('id', $killerId)
           ;
           
           return $qb
