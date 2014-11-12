@@ -3,16 +3,29 @@
 
 
 <div class="well">
-  {{ participant.user.username }}
 
-  
-  {{ form_start(formParticipants[i]) }}
+    <div class="form-group">
+        <div class="col-sm-3">
+            {{ participant.user.username }}
     
-    {# Les erreurs générales du formulaire. #}
-    {{ form_errors(formParticipants[i]) }}
-    {{ form_widget(formParticipants[i].save) }}
+            {{ form_start(formParticipants[i], {'attr': {'class': 'form-horizontal'}}) }}
+        
+            {{ form_errors(formParticipants[i]) }}
+        
+         
+                    </div>
+        <div class="col-sm-2">
+          {# Génération de l'input. #}
+          {{ form_widget(formParticipants[i].isAllowed) }}
+        </div>
+        <div class="col-sm-1">
+            {{ form_widget(formParticipants[i].save, {'attr': {'class': 'btn btn-primary'}}) }}
+        </div>
+    
     
     {# Fermeture de la balise <form> du formulaire HTML #}
-  {{ form_end(formParticipants[i]) }}
+    {{ form_end(formParticipants[i]) }}
+    </div>
+    <br /> 
 </div>
 

@@ -35,7 +35,7 @@
             
             {# Les erreurs générales du formulaire. #}
             {{ form_errors(formParticipation) }}
-            {{ form_widget(formParticipation.save) }}
+            {{ form_widget(formParticipation.save, {'attr': {'class': 'btn btn-primary'}}) }}
             
             {# Fermeture de la balise <form> du formulaire HTML #}
             {{ form_end(formParticipation) }}
