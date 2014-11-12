@@ -4,6 +4,8 @@ namespace Games\KillerBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
+use Games\KillerBundle\Entity\Killer;
+
 /**
  * PlayerRepository
  *
@@ -12,5 +14,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class PlayerRepository extends EntityRepository
 {
-	
+    public function findAllowedPlayers(Killer $killer)
+    {
+          $qb = $this->createQueryBuilder('p');
+          
+          $qb->where('p.isAllowed = true')
+             ->andWhere('p.killer = :id')
+             ->setParameter('id', $killer->getId())
+          ;
+          
+          return $qb
+            ->getQuery()
+            ->getResult()
+          ;
+    }
 }

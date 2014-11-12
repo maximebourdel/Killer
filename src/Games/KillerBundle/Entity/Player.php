@@ -64,6 +64,11 @@ class Player
      */
     private $isAllowed;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Games\KillerBundle\Entity\Player")
+     */
+    private $playerToKill;
+    
     
     public function __construct()
     {
@@ -160,6 +165,17 @@ class Player
     public function setIsAllowed ($isAllowed)
     {
         $this->isAllowed = $isAllowed;
+        return $this;
+    }
+    
+    public function getPlayerToKill ()
+    {
+        return $this->playerToKill;
+    }
+    
+    public function setPlayerToKill ($playerToKill)
+    {
+        $this->playerToKill = $playerToKill;
         return $this;
     }
 }

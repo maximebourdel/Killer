@@ -31,7 +31,7 @@
     {# On n'affiche pas le formulaire si l'utilisateur n'est pas admin 
     ET si participe déja #}
     {% if user is not null %}
-        {% if killer.userAdmin.id != user.id and player is not null %}
+        {% if killer.userAdmin.id != user.id and newPlayer is not null %}
             {{ form_start(formParticipation) }}
             
             {# Les erreurs générales du formulaire. #}
@@ -55,11 +55,21 @@
         		<p>Pas (encore !) de participants :(</p>
       		{% endfor %}
     	</ul>
+    	{# On affiche le bouton commencer ssi il n'y pas de date de début#}
+    	{% if killer.dateBegin is null and participants |length > 1%}
+    	
+    	 <a href="{{ path('games_killer_setKillerOn', {'id': killer.id} ) }}">
+    	   <button>Que les jeux commencent!!</button>
+    	 </a>
+    	      	   
+    	{% endif %}
 	
     {% endif %}
         
 </div>
 {% endblock %}
+
+
 
 {% block script %}
     <script> $('#consultKiller').addClass('active')</script>
