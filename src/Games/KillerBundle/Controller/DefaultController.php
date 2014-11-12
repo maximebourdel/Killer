@@ -253,8 +253,17 @@ class DefaultController extends Controller
         //on mélange les joueurs
         shuffle($allowedPlayers);
         
-        foreach ($allowedPlayers as $allowedPlayer){
+        foreach ($allowedPlayers as $i=> $allowedPlayer){
            
+           /*
+            * Attribution de la personne à tuer
+            */ 
+            if ($i < sizeOf($allowedPlayers)-1){
+                $allowedPlayer->setPlayerToKill($allowedPlayers[$i+1]);
+            } else {
+                $allowedPlayer->setPlayerToKill($allowedPlayers[0]);
+            }
+            
            /*
             * Attribution des objets
             */
