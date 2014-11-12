@@ -6,7 +6,7 @@
 {# Dans notre layout, il faut définir le block body #}
 {% block body %}
 <div class="container">
-    <h3>{{ killer.name }}</h3>
+    <h3>{{ killer.name }} pas encore démarré.</h3>
     
     
     <div class="well">
@@ -17,9 +17,8 @@
       {% if killer.dateEnd is not null %}
         Date fin du Killer : {{ killer.dateEnd|date('Y-m-d H:i:s') }}
       {% endif %}
-      {% if killer.dateBegin is not null %}
-        Est créé par {{ killer.dateBegin|date('Y-m-d') }}
-      {% endif %}
+      <br />
+        Est créé par {{ killer.userAdmin.username }}
       <br />
       {{ killer.adresse }}
       <br />
@@ -49,7 +48,7 @@
             <h5>Liste d'attente des participants</h5>
       		{% for i, participant in participants %}
         	    {# On inclut la vue à chaque itération dans la boucle #}
-        			{% include "GamesKillerBundle:Default:participants.html.twig" %}
+        		{% include "GamesKillerBundle:Default:participants.html.twig" %}
         		<hr />
       		{% else %}
         		<p>Pas (encore !) de participants :(</p>

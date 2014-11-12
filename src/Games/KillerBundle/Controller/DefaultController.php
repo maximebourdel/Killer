@@ -8,6 +8,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use Games\KillerBundle\Password\Password;
+use Games\KillerBundle\ObjectsAttribution\ObjectsAttribution;
+
+use Games\KillerBundle\Entity\Object;
+use Games\KillerBundle\Entity\ObjectRepository;
+
+use Games\KillerBundle\Entity\Image;
+use Games\KillerBundle\Entity\ImageRepository;
 
 use Games\UserBundle\Entity\User;
 use Games\UserBundle\Form\UserType;
@@ -85,6 +92,8 @@ class DefaultController extends Controller
             throw new AccessDeniedException('Accès limité aux personnes authentifiées.');
         }
         
+        
+        
         //on récupere les valeurs du killer
         $killer = $this->getDoctrine()
             ->getRepository('GamesKillerBundle:Killer')
@@ -95,22 +104,22 @@ class DefaultController extends Controller
         
         
         
+        
         //On gere la création du formulaire d'un nouveau participant
         $newPlayer = new Player();
         $formParticipation = $this->get('form.factory')->create(new PlayerType, $newPlayer);
         if ($formParticipation->handleRequest($request)->isValid()) {
             
             $em = $this->getDoctrine()->getManager();
-            
             $newPlayer->setKiller($killer);
             $newPlayer->setUser($user);
-        
             $em->persist($newPlayer);
-        
             $em->flush();
              
             return $this->redirect($this->generateUrl('games_killer_consultKiller', array('name' => $killer->getName())));
         } 
+        
+        
         
         //si la personne a déja participé, on définit à null le player
         $isPlayerExists = $this->getDoctrine()
@@ -127,6 +136,7 @@ class DefaultController extends Controller
         //on est à l'étape ou le jeu n'est pas commencé (participation)
         if($killer->getDateBegin() == null){ 
             
+            //on n'affiche pas le formulaire de gestion si l'utilisateur n'est le createur du Killer
             if($killer->getUserAdmin()->getId() == $user->getId() ){
                 
                 //on liste les gens qui veulent participer
@@ -137,34 +147,28 @@ class DefaultController extends Controller
                 ));
                 
                 
+                //gere le formulaire d'acceptation des participants
                 foreach ($participants as $i => $participant ){
                     
-                    $formType = new PlayerEnablingType($i);
-                    
-                    
+                    $formType = new PlayerEnablingType($i);                    
                     $formParticipants[] = $this->get('form.factory')->create($formType, $participant);
-                    
                     
                     if ($formParticipants[$i]->handleRequest($request)->isValid()) {
                         
                         $em = $this->getDoctrine()->getManager();
-                        
                         $em->persist($participant);
-                        
                         $em->flush();
                         
                         return $this->redirect($this->generateUrl('games_killer_consultKiller', array('name' => $killer->getName())));
                     }
                     
                     $formParticipants[$i] = $formParticipants[$i]->createView();
-        
                 }
             
             } else {
                 $formParticipants[] = null;
             }
             
-    		// Puis modifiez la ligne du render comme ceci, pour prendre en compte les variables :
     		return $this->render ( 'GamesKillerBundle:Default:consultKiller.html.twig', array (
     				'killer' => $killer,
     		        'formParticipation' => $formParticipation->createView(),
@@ -177,14 +181,16 @@ class DefaultController extends Controller
         //étape ou le jeu est commencé!!
         } else {
             
+            //on récupere les valeurs du killer
             $allowedPlayers = $this->getDoctrine()
             ->getRepository('GamesKillerBundle:Player')
             ->findAllowedPlayers($killer->getId());
             
             
-            
             return $this->render('GamesKillerBundle:Default:consultKillerOn.html.twig', array (
-                'allowedPlayers' => $allowedPlayers,
+                    'killer' => $killer,
+                    'participants' => $allowedPlayers,
+                    'user' => $user,
             ) );
             
         }    
@@ -221,6 +227,14 @@ class DefaultController extends Controller
     
     public function setKillerOnAction(Request $request, $id)
     {
+        // On vérifie que l'utilisateur dispose bien du rôle ROLE_AUTEUR
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('Accès limité aux personnes authentifiées.');
+        }
+        
+        $user = $this->get('security.context')->getToken()->getUser(); 
+        
         //on récupere les valeurs du killer
         $allowedPlayers = $this->getDoctrine()
         ->getRepository('GamesKillerBundle:Player')
@@ -231,17 +245,42 @@ class DefaultController extends Controller
         ->findOneById($id);
         
         
+        //on récupere les valeurs du killer
+        $objects = $this->getDoctrine()
+        ->getRepository('GamesKillerBundle:Object')
+        ->findAll();
+        
+        //on mélange les joueurs
+        shuffle($allowedPlayers);
+        
         foreach ($allowedPlayers as $allowedPlayer){
-            
+           
+           /*
+            * Attribution des objets
+            */
            //génération du password
            $password = new Password();
            $allowedPlayer->setPassword( $password->generateNewPassword() );
            
+           /*
+            * Attribution des objets
+            */
+           //on sélectionne un objet au hasard
+           $randomIndex = rand(0, sizeOf($objects)-1);
+           
+           //on l'attribue au joueur
+           $allowedPlayer->setObject($objects[$randomIndex]);
+           
+           //on enleve l'objet de la liste pour qu'il ne soit utilisé qu'une fois
+           array_splice($objects, $randomIndex, 1);
+           
            $em = $this->getDoctrine()->getManager();
                     
-           $em->persist($allowedPlayer);
-          
+           $em->persist($allowedPlayer);    
+           
         }
+        $em->flush();
+        
         
         //on redéfinit les participants et la date du début
         $killer->setNbParticipants( count($allowedPlayers) );
@@ -252,6 +291,22 @@ class DefaultController extends Controller
         $em->flush();
         
         
-        return $this->redirect($this->generateUrl('games_killer_consultKiller', array('name' => $killer->getName())));
+        //on récupere les valeurs du killer
+        $allowedPlayers = $this->getDoctrine()
+        ->getRepository('GamesKillerBundle:Player')
+        ->findAllowedPlayers($id);
+        
+        //si c'est le créateur du killer
+        if($killer->getUserAdmin()->getId() == $user->getId() ){
+            
+            return $this->render ( 'GamesKillerBundle:Default:consultKillerOn.html.twig', array (
+        				'killer' => $killer,
+                        'participants' => $allowedPlayers,
+        		        'user' => $user,
+        	) );    
+        
+        } else {
+            
+        }
     }
 }

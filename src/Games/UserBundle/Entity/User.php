@@ -22,6 +22,21 @@ class User extends BaseUser
   
   
   /**
+   * @var string
+   *
+   * @ORM\Column(name="name", type="string", length=20)
+   */
+  private $name;
+  
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="surname", type="string", length=20)
+   */
+  private $surname;
+  
+  
+  /**
    * Représente la liste des killers d'un user
    * 
    * @ORM\OneToMany(targetEntity="Games\KillerBundle\Entity\Killer", mappedBy="userAdmin")

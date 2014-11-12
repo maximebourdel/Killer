@@ -69,6 +69,11 @@ class Player
      */
     private $playerToKill;
     
+    /**
+     * @ORM\OneToOne(targetEntity="Games\KillerBundle\Entity\Object", cascade={"persist"})
+     */
+    private $object;
+    
     
     public function __construct()
     {
@@ -178,4 +183,18 @@ class Player
         $this->playerToKill = $playerToKill;
         return $this;
     }
+
+    public function getObject ()
+    {
+        return $this->object;
+    }
+
+    public function setObject ($object)
+    {
+        $this->object = $object;
+        return $this;
+    }
+ 
+    
+    
 }
