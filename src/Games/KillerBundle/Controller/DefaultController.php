@@ -133,12 +133,12 @@ class DefaultController extends Controller
 
        
         $participants = null;
-        $formParticipants[] = null;
         //on est à l'étape ou le jeu n'est pas commencé (participation)
         if($killer->getDateBegin() == null){ 
             
             //on n'affiche pas le formulaire de gestion si l'utilisateur n'est le createur du Killer
             if($killer->getUserAdmin()->getId() == $user->getId() ){
+                
                 
                 //on liste les gens qui veulent participer
                 $participants = $this->getDoctrine()
@@ -149,6 +149,7 @@ class DefaultController extends Controller
                 
                 
                 //gere le formulaire d'acceptation des participants
+                $formParticipants[] = null;
                 foreach ($participants as $i => $participant ){
                     
                     $formType = new PlayerEnablingType($i);                    
