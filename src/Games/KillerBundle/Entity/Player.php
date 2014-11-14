@@ -70,7 +70,7 @@ class Player
     private $playerToKill;
     
     /**
-     * @ORM\OneToOne(targetEntity="Games\KillerBundle\Entity\Object", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Games\KillerBundle\Entity\Object", inversedBy="players")
      */
     private $object;
     
@@ -80,8 +80,6 @@ class Player
         $this->numkills = 0;
         $this->isDead = false;
         $this->isAllowed = false;
-        
-        
     }
     
     

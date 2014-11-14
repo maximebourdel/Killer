@@ -148,8 +148,6 @@ class DefaultController extends Controller
                 ));
                 
                 
-                //gere le formulaire d'acceptation des participants
-                $formParticipants[] = null;
                 foreach ($participants as $i => $participant ){
                     
                     $formType = new PlayerEnablingType($i);                    

@@ -35,6 +35,11 @@ class Object
     private $image;
     
     /**
+     * @ORM\OneToMany(targetEntity="Games\KillerBundle\Entity\Player", mappedBy="object")
+     */
+    private $players;
+    
+    /**
      * Get id
      *
      * @return integer 
