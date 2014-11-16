@@ -282,8 +282,16 @@ class Killer {
 	    return $this->longitude;
 	}
 	
-	public function getPlayers()
-	{
-	    return $this->players;
+	public function getPlayers(){
+        return $this->players;
 	}
+	
+	public function addPlayer(\Games\KillerBundle\Entity\Player $player)	{
+	    $this->players[] = $players;
+	}
+	
+	public function removePlayer(\Games\KillerBundle\Entity\Player $player)	{
+	    $this->players->removeElement($players);
+	}
+	
 }

@@ -65,9 +65,14 @@ class Player
     private $isAllowed;
 
     /**
-     * @ORM\OneToOne(targetEntity="Games\KillerBundle\Entity\Player")
+     * @ORM\ManyToOne(targetEntity="Games\KillerBundle\Entity\Player", inversedBy="player")
      */
     private $playerToKill;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Games\KillerBundle\Entity\Player", mappedBy="playerToKill")
+     */
+    private $player;
     
     /**
      * @ORM\ManyToOne(targetEntity="Games\KillerBundle\Entity\Object", inversedBy="players")

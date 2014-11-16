@@ -140,7 +140,7 @@ class DefaultController extends Controller
         if($killer->getDateBegin() == null){ 
             
             //on n'affiche pas le formulaire de gestion si l'utilisateur n'est le createur du Killer
-            if($killer->getUserAdmin()->getId() == $user->getId() ){
+            if($killer->getUserAdmin()->getId() == $user->getId()){
                 
                 
                 //on liste les gens qui veulent participer
@@ -171,6 +171,9 @@ class DefaultController extends Controller
             } else {
                 $formParticipants[] = null;
             }
+            
+            //rien ne sert d'afficher un formulaire si il n'y a personne
+            if(sizeOf($participants) == 0){ $formParticipants[] = null; }
             
     		return $this->render ( 'GamesKillerBundle:Default:consultKiller.html.twig', array (
     				'killer' => $killer,
@@ -239,9 +242,11 @@ class DefaultController extends Controller
                                     
                                     $player->setNumkills($player->getNumkills()+1);
                                     
-                                    //cas ou il n'y avait plus que 2 concurrents
+                                    //cas ou il n'y avait plus que 2 concurrents c'est la FIN
                                     if($playerToKill->getPlayerToKill() == $player){
                                         $player->setPlayerToKill(null);
+                                        $killer->setDateEnd(new \Datetime());
+                                        $em->persist($killer);
                                     } else {    
                                         $player->setPlayerToKill($playerToKill->getPlayerToKill());
                                     }
@@ -394,7 +399,11 @@ class DefaultController extends Controller
         $allowedPlayers = $this->getDoctrine()
         ->getRepository('GamesKillerBundle:Player')
         ->findAllowedPlayers($id);
+        
+        return $this->redirect($this->generateUrl('games_killer_consultKiller', array('name' => $killer->getName())));
+        
     }
+    
 }
 
 
