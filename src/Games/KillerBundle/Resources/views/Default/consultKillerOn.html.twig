@@ -23,8 +23,6 @@
       {{ killer.adresse }}
       <br />
       
-      
-      
     </div>
     
     {# On n'affiche les droits de gestion des participants #}
@@ -33,7 +31,6 @@
             <h5>Voici la liste des participants en course!</h5>
       		{% for participant in participants %}
         	    <div class="well">
-        	    
         	    
         	       <strong>{{ participant.user.username }}</strong>
         	       doit tuer <strong>{{ participant.playerToKill.user.username }}</strong> 
@@ -44,8 +41,10 @@
     	</ul>
 	
     {% endif %}
-        
 </div>
+
+
+
 {% endblock %}
 
 

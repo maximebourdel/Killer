@@ -1,0 +1,94 @@
+{# On étend notre layout #}
+{% extends "::layout.html.twig" %}
+
+
+
+{# Dans notre layout, il faut définir le block body #}
+{% block body %}
+<div class="container">
+    <h3>{{ killer.name }} est en cours!!</h3>
+    
+    
+    <div class="well">
+      {% if killer.dateBegin is not null %}
+        Date debut du Killer : {{ killer.dateBegin|date('Y-m-d') }}
+      {% endif %}
+      <br />
+      {% if killer.dateEnd is not null %}
+        Date fin du Killer : {{ killer.dateEnd|date('Y-m-d H:i:s') }}
+      {% endif %}
+      <br />
+        Est créé par {{ killer.userAdmin.username }}
+      <br />
+      {{ killer.adresse }}
+      <br />
+      
+    </div>
+    <ul>
+    {% if participants.playerToKill != null %}
+        <h5>Voici votre objectif</h5>
+  		
+	    <div class="well">
+	       Tu dois tuer <strong>{{ participants.playerToKill.user.username }}</strong> 
+	       avec <strong>{{ participants.object.name }}</strong>
+	    </div>	
+  	{% else %}
+  	    <h5>Félicitations vous êtes le grand gagnant!</h5>	
+	{% endif %}	
+	</ul>
+	
+	{% if playerEliminationForm != null and participants.playerToKill != null and participants.isDead == false %}
+        <h4>J'ai tué ma victime!</h4>
+        <div class="well">
+            
+            <div class="well col-sm-6">
+              {{ form_start(playerEliminationForm, {'attr': {'class': 'form-horizontal'}}) }}
+            
+              {# Les erreurs générales du formulaire. #}
+              {{ form_errors(playerEliminationForm) }}
+              
+              {# Idem pour un autre champ. #}
+              <div class="form-group">
+                {{ form_label(playerEliminationForm.password, "Entrez le mot de passe", {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+                {{ form_errors(playerEliminationForm.password) }}
+                  
+                <div class="col-sm-7">
+                  {{ form_widget(playerEliminationForm.password, {'attr': {'class': 'form-control'}}) }}
+                  
+                  {# Message pour l'erreur #}
+                  {% for flashMessage in app.session.flashbag.get('notice') %}
+                    <div class="flash-notice">
+                        {{ flashMessage }}
+                    </div>
+                  {% endfor %}
+                  
+                </div>
+                
+              </div>
+              
+              
+              {# Génération du label + error + widget pour un champ #}
+              {{ form_row(playerEliminationForm.password) }}
+              
+            
+              {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+              {{ form_widget(playerEliminationForm.save, {'attr': {'class': 'btn btn-primary'}}) }}
+        
+              {# Fermeture de la balise <form> du formulaire HTML #}
+              {{ form_end(playerEliminationForm) }}
+            </div>
+        </div>	
+    {% endif %}	 
+    
+    {% if participants.isDead == true %}
+        <h4>Désolé, mais on vous a tué sur ce Killer!</h4>
+    {% endif %}	   
+</div>
+
+{% endblock %}
+
+
+
+{% block script %}
+    <script> $('#consultKiller').addClass('active')</script>
+{% endblock %}

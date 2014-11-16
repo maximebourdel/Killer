@@ -11,9 +11,7 @@
             {{ form_start(formParticipants[i], {'attr': {'class': 'form-horizontal'}}) }}
         
             {{ form_errors(formParticipants[i]) }}
-        
-         
-                    </div>
+        </div>
         <div class="col-sm-2">
           {# Génération de l'input. #}
           {{ form_widget(formParticipants[i].isAllowed) }}

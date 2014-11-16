@@ -27,6 +27,9 @@ use Games\KillerBundle\Entity\Player;
 use Games\KillerBundle\Entity\PlayerRepository;
 use Games\KillerBundle\Form\PlayerType;
 use Games\KillerBundle\Form\PlayerEnablingType;
+use Games\KillerBundle\Form\PlayerEliminationType;
+
+use Symfony\Component\HttpFoundation\Response;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -180,19 +183,106 @@ class DefaultController extends Controller
         
         //étape ou le jeu est commencé!!
         } else {
+            //on n'affiche pas le formulaire de gestion si l'utilisateur n'est le createur du Killer
+            if($killer->getUserAdmin()->getId() == $user->getId() ){
             
-            //on récupere les valeurs du killer
-            $allowedPlayers = $this->getDoctrine()
-            ->getRepository('GamesKillerBundle:Player')
-            ->findAllowedPlayers($killer->getId());
-            
-            
-            return $this->render('GamesKillerBundle:Default:consultKillerOn.html.twig', array (
-                    'killer' => $killer,
-                    'participants' => $allowedPlayers,
-                    'user' => $user,
-            ) );
-            
+                //on récupere les valeurs du killer
+                $allowedPlayers = $this->getDoctrine()
+                ->getRepository('GamesKillerBundle:Player')
+                ->findAllowedPlayers($killer->getId());
+                
+                
+                return $this->render('GamesKillerBundle:Default:consultKillerOn.html.twig', array (
+                        'killer' => $killer,
+                        'participants' => $allowedPlayers,
+                        'user' => $user,
+                ) );
+            //si ce n'est pas le créateur du killer
+            } else {
+                
+                //on récupere le player du killer si il existe 
+                $player = $this->getDoctrine()
+                ->getRepository('GamesKillerBundle:Player')
+                ->findOneBy(
+                        array(
+                                'killer' => $killer,
+                                'user' => $user
+                        )
+                );
+                                
+                //si le joueur est inscrit
+                if ($player != null) {
+                    
+                    //le joueur a été accepté
+                    if ( $player->getIsAllowed() == true ){
+                            
+                        
+                            $playerEliminationForm = $this->get('form.factory')->create(new PlayerEliminationType, new Player());
+                            
+                            
+                            if ($playerEliminationForm->handleRequest($request)->isValid()) {
+                                
+                                
+                                $playerToKill = $player->getPlayerToKill(); 
+                                    
+
+                                
+                                
+                                //on vérifie que le mdp entré est le bon    
+                                if ($playerEliminationForm['password']->getData() == $playerToKill->getPassword()){
+                                    
+                                    $em = $this->getDoctrine()->getManager();
+                                    
+                                    $playerToKill->setIsDead(true);
+                                    $playerToKill->setDeathDate(new \Datetime());
+                                    
+                                    
+                                    $player->setNumkills($player->getNumkills()+1);
+                                    
+                                    //cas ou il n'y avait plus que 2 concurrents
+                                    if($playerToKill->getPlayerToKill() == $player){
+                                        $player->setPlayerToKill(null);
+                                    } else {    
+                                        $player->setPlayerToKill($playerToKill->getPlayerToKill());
+                                    }
+                                   
+                                    $em->persist($player);
+                                    $em->persist($playerToKill);
+                                    
+                                    $em->flush();
+                                    
+                                 //cas d'un mauvais mot de passe
+                                 } else {
+                                    // On définit un message flash
+                                    $this->get ( 'session' )->getFlashBag ()->add ( 'notice', 'Mauvais mot de passe' );
+                                    return $this->redirect($this->generateUrl('games_killer_consultKiller', array('name' => $killer->getName())));
+                                 }
+                                      
+                                    
+                           
+                        }
+                        
+                        $playerEliminationForm = $playerEliminationForm->createView();
+                        
+                        if ($player->getPlayerToKill() == null ){$playerEliminationForm == null;}
+                        
+                        return $this->render ( 'GamesKillerBundle:Default:consultKillerOnPlayer.html.twig', array (
+                                'killer' => $killer,
+                                'participants' => $player,
+                                'user' => $user,
+                                'playerEliminationForm' => $playerEliminationForm,
+                                
+                        ) );
+                
+                    } else {
+                        throw new AccessDeniedException('Désolé, ce killer est déja commencé et vous n\'avez pas été accepté :(');
+                    }
+                
+                } else {
+                    throw new AccessDeniedException('Désolé, ce killer est déja commencé :/');
+                }
+                
+            }
         }    
     }
     
@@ -224,7 +314,7 @@ class DefaultController extends Controller
     }
     
     
-    
+    //le killer est commencé
     public function setKillerOnAction(Request $request, $id)
     {
         // On vérifie que l'utilisateur dispose bien du rôle ROLE_AUTEUR
@@ -304,18 +394,13 @@ class DefaultController extends Controller
         $allowedPlayers = $this->getDoctrine()
         ->getRepository('GamesKillerBundle:Player')
         ->findAllowedPlayers($id);
-        
-        //si c'est le créateur du killer
-        if($killer->getUserAdmin()->getId() == $user->getId() ){
-            
-            return $this->render ( 'GamesKillerBundle:Default:consultKillerOn.html.twig', array (
-        				'killer' => $killer,
-                        'participants' => $allowedPlayers,
-        		        'user' => $user,
-        	) );    
-        
-        } else {
-            
-        }
     }
 }
+
+
+
+
+
+
+
+    
