@@ -83,6 +83,18 @@ class Object
         $this->image = $image;
         return $this;
     }
+
+    public function getPlayers ()
+    {
+        return $this->players;
+    }
+
+    public function setPlayers ($players)
+    {
+        $this->players = $players;
+        return $this;
+    }
+ 
  
     
     

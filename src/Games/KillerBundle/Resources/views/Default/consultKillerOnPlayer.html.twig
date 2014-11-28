@@ -38,10 +38,9 @@
 	</ul>
 	
 	{% if playerEliminationForm != null and participants.playerToKill != null and participants.isDead == false %}
-        <h4>J'ai tué ma victime!</h4>
-        <div class="well">
-            
-            <div class="well col-sm-6">
+        
+        <div class="well col-sm-6">
+            <h4>J'ai tué ma victime!</h4>
               {{ form_start(playerEliminationForm, {'attr': {'class': 'form-horizontal'}}) }}
             
               {# Les erreurs générales du formulaire. #}
@@ -61,22 +60,25 @@
                         {{ flashMessage }}
                     </div>
                   {% endfor %}
-                  
                 </div>
-                
               </div>
-              
               
               {# Génération du label + error + widget pour un champ #}
               {{ form_row(playerEliminationForm.password) }}
-              
             
               {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
               {{ form_widget(playerEliminationForm.save, {'attr': {'class': 'btn btn-primary'}}) }}
         
               {# Fermeture de la balise <form> du formulaire HTML #}
               {{ form_end(playerEliminationForm) }}
-            </div>
+        </div>	
+        
+        <br />
+        
+        
+        <div class="well col-sm-5 col-sm-offset-1">
+        <h4>Je me suis fait tuer!</h4>
+            Donne le code suivant à ton assassin : {{ participants.password }}
         </div>	
     {% endif %}	 
     

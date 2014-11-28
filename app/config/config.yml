@@ -80,3 +80,51 @@ fos_user:
     user_class: Games\UserBundle\Entity\User
 
 
+fos_elastica:
+    clients:
+        default: { host: 127.0.0.1, port: 9200 }
+    indexes:
+        killer:
+            client: default
+            settings:
+                index:
+                    analysis:
+                        analyzer:
+                            custom_search_analyzer:
+                                type: custom
+                                tokenizer: standard
+                                filter   : [standard, lowercase, asciifolding]
+                            custom_index_analyzer:
+                                type: custom
+                                tokenizer: standard
+                                filter   : [standard, lowercase, asciifolding, custom_filter]
+                        filter:
+                            custom_filter:
+                                type: edgeNGram
+                                side: front
+                                min_gram: 1
+                                max_gram: 10
+            types:
+                killer:
+                    mappings: 
+                        adresse : { search_analyzer: custom_search_analyzer, index_analyzer: custom_index_analyzer, type: string }
+                    persistence:
+                        driver: orm
+                        model:  Games\KillerBundle\Entity\Killer
+                        provider: ~
+                        finder: ~
+                        listener: ~
+                        repository: Games\KillerBundle\Entity\ElasticRepository\KillerElasticRepository
+
+
+
+
+
+
+
+
+
+
+
+
+

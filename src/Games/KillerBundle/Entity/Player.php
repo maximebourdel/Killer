@@ -197,7 +197,20 @@ class Player
         $this->object = $object;
         return $this;
     }
+
+    public function getPlayer ()
+    {
+        return $this->player;
+    }
+
+    public function setPlayer ($player)
+    {
+        $this->player = $player;
+        return $this;
+    }
  
+ 
+    
     
     
 }

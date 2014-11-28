@@ -21,12 +21,12 @@
 		"sensio/distribution-bundle" : "~3.0",
 		"sensio/framework-extra-bundle" : "~3.0",
 		"incenteev/composer-parameter-handler" : "~2.0",
-		
 		"friendsofsymfony/user-bundle" : "2.0.*@dev",
-		
 		"twitter/bootstrap" : "v3.0.0",
 		"twbs/bootstrap" : "3.2.*@dev",
-		"mopa/bootstrap-bundle" : "2.3.*@dev"
+		"mopa/bootstrap-bundle" : "2.3.*@dev",
+		"friendsofsymfony/elastica-bundle" : "~3.0",
+		"jms/serializer-bundle" : "0.12.0"
 	},
 	"require-dev" : {
 		"sensio/generator-bundle" : "~2.3"

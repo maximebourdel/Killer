@@ -9,6 +9,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use Games\KillerBundle\Password\Password;
 use Games\KillerBundle\ObjectsAttribution\ObjectsAttribution;
+use Games\KillerBundle\SearchKillerByAdress\SearchKillerByAdress;
+
 
 use Games\KillerBundle\Entity\Object;
 use Games\KillerBundle\Entity\ObjectRepository;
@@ -22,6 +24,7 @@ use Games\UserBundle\Form\UserType;
 use Games\KillerBundle\Entity\Killer;
 use Games\KillerBundle\Entity\KillerRepository;
 use Games\KillerBundle\Form\KillerType;
+use Games\KillerBundle\Entity\ElasticRepository\KillerElasticRepository;
 
 use Games\KillerBundle\Entity\Player;
 use Games\KillerBundle\Entity\PlayerRepository;
@@ -33,16 +36,37 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 class DefaultController extends Controller
 {
     public function indexAction(Request $request)
     {
+        
+
+        
+        
         $killers = $this->getDoctrine()
         ->getRepository('GamesKillerBundle:Killer')
         ->findAll();
         
+       
+        // call elastic manager
+        $elasticManager = $this->container->get('fos_elastica.manager.orm');
+        
+        // retrieve results
+        $results = $elasticManager->getRepository('GamesKillerBundle:Killer')->findAdress("ok");
+        
+        
+        
+        $searchKiller = new SearchKillerByAdress();
+        $data = $searchKiller->searchAdress($results);
+        
+        
+        
         return $this->render('GamesKillerBundle:Default:index.html.twig', array (
                 'killers' => $killers,
+                'data' => $data
         ) );
     }
     
@@ -402,6 +426,42 @@ class DefaultController extends Controller
         
         return $this->redirect($this->generateUrl('games_killer_consultKiller', array('name' => $killer->getName())));
         
+    }
+    
+ 
+    public function ajaxrqAction() {
+
+        //Déclarer un tableau de type Array
+        $list_killers = array();
+
+        $request = $this->container->get('request');
+
+        if ($this->container->get('request')->isXmlHttpRequest()) {
+            
+            //Récuperer le choix que vous fait dans la liste déroulante "Pays : "
+            $id = $request->request->get('id');
+            //Faire la requête pour récurer la liste des ville du pays sélectionné, grâce à leur "id" (fr, ma, es..), insérer ce résultat dans $villes  
+            
+            // call elastic manager
+            $elasticManager = $this->container->get('fos_elastica.manager.orm');
+            // retrieve results
+            $killers = $elasticManager->getRepository('GamesKillerBundle:Killer')->findAdress($id);
+            
+            //Remplir la liste déroulante avec le résultat 
+            foreach ($killers as $k) {
+                $list_killers[$k->getId()] = $k->getAdresse();
+            }
+        
+        } 
+
+        //Instancier une "réponse" grâce à l'objet "Response"
+        $response = new Response(json_encode($list_killers));
+
+       //Lui indiquer le type de format dans le quelle est envoyé la reponse
+        $response->headers->set('Content-Type', 'application/json');
+
+       //Retourner la tout à notre liste déroulante
+        return $response;
     }
     
 }

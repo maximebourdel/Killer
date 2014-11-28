@@ -2,8 +2,9 @@
 
 <html>
 	<head>
-		<script src="//code.jquery.com/jquery-1.9.1.js"></script>
-		<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	
+	    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 		
 		{% stylesheets 
 			filter='cssrewrite,?yui_css' '@MopaBootstrapBundle/Resources/bootstrap/dist/css/*'%}
@@ -14,7 +15,10 @@
 			<link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
 		{% endstylesheets %}
 		
+		
+		
 		{% javascripts
+		    '@MopaBootstrapBundle/Resources/bootstrap/js/tooltip.js'
        		'@MopaBootstrapBundle/Resources/bootstrap/js/*'
    		%}
         	<script src="{{ asset_url }}"></script>
