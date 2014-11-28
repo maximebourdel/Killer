@@ -42,31 +42,12 @@ class DefaultController extends Controller
 {
     public function indexAction(Request $request)
     {
-        
-
-        
-        
         $killers = $this->getDoctrine()
         ->getRepository('GamesKillerBundle:Killer')
         ->findAll();
         
-       
-        // call elastic manager
-        $elasticManager = $this->container->get('fos_elastica.manager.orm');
-        
-        // retrieve results
-        $results = $elasticManager->getRepository('GamesKillerBundle:Killer')->findAdress("ok");
-        
-        
-        
-        $searchKiller = new SearchKillerByAdress();
-        $data = $searchKiller->searchAdress($results);
-        
-        
-        
         return $this->render('GamesKillerBundle:Default:index.html.twig', array (
                 'killers' => $killers,
-                'data' => $data
         ) );
     }
     
@@ -439,17 +420,18 @@ class DefaultController extends Controller
         if ($this->container->get('request')->isXmlHttpRequest()) {
             
             //Récuperer le choix que vous fait dans la liste déroulante "Pays : "
-            $id = $request->request->get('id');
+            $adresse = $request->request->get('adresse');
             //Faire la requête pour récurer la liste des ville du pays sélectionné, grâce à leur "id" (fr, ma, es..), insérer ce résultat dans $villes  
+            
             
             // call elastic manager
             $elasticManager = $this->container->get('fos_elastica.manager.orm');
             // retrieve results
-            $killers = $elasticManager->getRepository('GamesKillerBundle:Killer')->findAdress($id);
+            $killers = $elasticManager->getRepository('GamesKillerBundle:Killer')->findAdress($adresse);
             
             //Remplir la liste déroulante avec le résultat 
             foreach ($killers as $k) {
-                $list_killers[$k->getId()] = $k->getAdresse();
+                $list_killers[] = $k->getName();
             }
         
         } 

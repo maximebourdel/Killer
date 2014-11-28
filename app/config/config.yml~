@@ -83,8 +83,11 @@ fos_user:
 fos_elastica:
     clients:
         default: { host: 127.0.0.1, port: 9200 }
+    serializer:
+        callback_class: FOS\ElasticaBundle\Serializer\Callback
+        serializer: serializer
     indexes:
-        killer:
+        image:
             client: default
             settings:
                 index:
@@ -93,29 +96,29 @@ fos_elastica:
                             custom_search_analyzer:
                                 type: custom
                                 tokenizer: standard
-                                filter   : [standard, asciifolding]
+                                filter   : [standard, lowercase, asciifolding]
                             custom_index_analyzer:
                                 type: custom
                                 tokenizer: standard
-                                filter   : [standard, asciifolding, custom_filter]
+                                filter   : [standard, lowercase, asciifolding, custom_filter]
                         filter:
                             custom_filter:
-                                type: edge_ngram
+                                type: edgeNGram
                                 side: front
-                                min_gram: 2
-                                max_gram: 99
-                                
+                                min_gram: 1
+                                max_gram: 3
             types:
-                killer:
+                image:
                     mappings: 
-                        name : { search_analyzer: custom_search_analyzer, index_analyzer: custom_index_analyzer, type: string }
+                        id :
+                            type: integer
+                        url : { search_analyzer: custom_search_analyzer, index_analyzer: custom_index_analyzer, type: string }
                     persistence:
                         driver: orm
-                        model:  Games\KillerBundle\Entity\Killer
+                        model:  Games\KillerBundle\Entity\Image
                         provider: ~
                         finder: ~
                         listener: ~
-                        repository: Games\KillerBundle\Entity\ElasticRepository\KillerElasticRepository
 
 
 
