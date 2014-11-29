@@ -116,16 +116,3 @@ fos_elastica:
                         finder: ~
                         listener: ~
                         repository: Games\KillerBundle\Entity\ElasticRepository\KillerElasticRepository
-
-
-
-
-
-
-
-
-
-
-
-
-

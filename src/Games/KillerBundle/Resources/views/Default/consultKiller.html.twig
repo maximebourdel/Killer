@@ -46,17 +46,22 @@
     {% if killer.userAdmin.id == user.id %}
         <ul>
             <h5>Liste d'attente des participants</h5>
+            <div class="col-sm-12">
       		{% for i, participant in participants %}
         	    {# On inclut la vue à chaque itération dans la boucle #}
+        	    
         		{% include "GamesKillerBundle:Default:participants.html.twig" %}
-        		<hr />
+        		
+        		
       		{% else %}
         		<p>Pas (encore !) de participants :(</p>
       		{% endfor %}
+      		</div>
     	</ul>
+    	 
     	{# On affiche le bouton commencer ssi il n'y pas de date de début#}
     	{% if killer.dateBegin is null and participants |length > 1%}
-    	
+    	 <br />
     	 <a href="{{ path('games_killer_setKillerOn', {'id': killer.id} ) }}">
     	   <button>Que les jeux commencent!!</button>
     	 </a>
