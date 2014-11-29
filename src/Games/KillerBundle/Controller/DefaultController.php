@@ -161,14 +161,7 @@ class DefaultController extends Controller
                     $formType = new PlayerEnablingType($i);                    
                     $formParticipants[] = $this->get('form.factory')->create($formType, $participant);
                     
-                    if ($formParticipants[$i]->handleRequest($request)->isValid()) {
-                        
-                        $em = $this->getDoctrine()->getManager();
-                        $em->persist($participant);
-                        $em->flush();
-                        
-                        return $this->redirect($this->generateUrl('games_killer_consultKiller', array('name' => $killer->getName())));
-                    }
+                    //la vérification de ce formulaire est effectuée dans la vue pour les participants en AJAX
                     
                     $formParticipants[$i] = $formParticipants[$i]->createView();
                 }
@@ -410,7 +403,7 @@ class DefaultController extends Controller
     }
     
  
-    public function ajaxrqAction() {
+    public function ajaxrqSearchKillerAction() {
 
         //Déclarer un tableau de type Array
         $list_killers = array();
@@ -443,6 +436,43 @@ class DefaultController extends Controller
         $response->headers->set('Content-Type', 'application/json');
 
        //Retourner la tout à notre liste déroulante
+        return $response;
+    }
+   
+    
+    public function ajaxrqValidatePlayerAction() {
+        
+        $request = $this->container->get('request');
+    
+        if ($this->container->get('request')->isXmlHttpRequest()) {
+            
+            //Récuperer le choix que vous fait dans la liste déroulante "Pays : "
+            $id = $request->request->get('id');
+            //Faire la requête pour récurer la liste des ville du pays sélectionné, grâce à leur "id" (fr, ma, es..), insérer ce résultat dans $villes
+    
+            //on récupere les valeurs du killer
+            $participant = $this->getDoctrine()
+            ->getRepository('GamesKillerBundle:Player')
+            ->find($id);
+            
+            if($participant->getIsAllowed() == true ){
+                $participant->setIsAllowed(false);
+            } else {
+                $participant->setIsAllowed(true);
+            }
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($participant);
+            $em->flush();
+            
+        }
+        //Instancier une "réponse" grâce à l'objet "Response"
+        $response = new Response(json_encode("ok"));
+        
+        //Lui indiquer le type de format dans le quelle est envoyé la reponse
+        $response->headers->set('Content-Type', 'application/json');
+        
+        //Retourner la tout à notre liste déroulante
         return $response;
     }
     

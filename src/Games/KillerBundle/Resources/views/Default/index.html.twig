@@ -33,9 +33,6 @@
     </div>
    
 </div>
-{% if response is defined %}
-    {{ response|json_encode() }}
-{% endif %}
 
 {% endblock %}
 
@@ -108,14 +105,14 @@
     
 
     
-  //#city représente la liste déroulante des pays, on lui indique de lancer une fonction au changement de choix dans la liste déroulante grâce à ".change(...).
+    //#city représente la liste déroulante des pays, on lui indique de lancer une fonction au changement de choix dans la liste déroulante grâce à ".change(...).
     $("#city").keyup(function() {
         $.ajax({
 
             //On lui indique le type d'envoie des informations
             type: 'POST',
             //On lui indique le chemin de la fonction
-            url:  '{{ path('games_killer_ajaxrq') }}',
+            url:  '{{ path('games_killer_ajaxrqSearchKiller') }}',
 
             //On lui donne la valeur du choix qu'on a fait, et id est la variable qui va contenir notre valeur, nous la retrouvons dans notre controller
             data: 'adresse=' + $(this).val(),

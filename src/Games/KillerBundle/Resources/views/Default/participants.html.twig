@@ -16,9 +16,7 @@
           {# Génération de l'input. #}
           {{ form_widget(formParticipants[i].isAllowed) }}
         </div>
-        <div class="col-sm-1">
-            {{ form_widget(formParticipants[i].save, {'attr': {'class': 'btn btn-primary'}}) }}
-        </div>
+        
     
     
     {# Fermeture de la balise <form> du formulaire HTML #}
@@ -26,4 +24,39 @@
     </div>
     <br /> 
 </div>
+
+<script>
+    //on cache les boutons valider
+    $( '#games_killerbundle_enablingPlayer'+{{ i }}+'_save' ).hide();
+
+
+
+  //#city représente la liste déroulante des pays, on lui indique de lancer une fonction au changement de choix dans la liste déroulante grâce à ".change(...).
+    $('#games_killerbundle_enablingPlayer'+{{ i }}+'_isAllowed_1').click(function() {
+        $.ajax({
+
+            //On lui indique le type d'envoie des informations
+            type: 'POST',
+            //On lui indique le chemin de la fonction
+            url:  '{{ path('games_killer_ajaxrqValidatePlayer') }}',
+
+            //On lui donne la valeur du choix qu'on a fait, et id est la variable qui va contenir notre valeur, nous la retrouvons dans notre controller
+            data: 'id='+{{ participant.id }}
+        }
+    )});
+        
+    $('#games_killerbundle_enablingPlayer'+{{ i }}+'_isAllowed_0').click(function() {
+        $.ajax({
+
+            //On lui indique le type d'envoie des informations
+            type: 'POST',
+            //On lui indique le chemin de la fonction
+            url:  '{{ path('games_killer_ajaxrqValidatePlayer') }}',
+
+            //On lui donne la valeur du choix qu'on a fait, et id est la variable qui va contenir notre valeur, nous la retrouvons dans notre controller
+            data: 'id='+{{ participant.id }}
+        }
+    )});
+    
+</script>
 

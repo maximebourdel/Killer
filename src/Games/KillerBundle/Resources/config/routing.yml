@@ -18,8 +18,10 @@ games_killer_setKillerOn:
     path:     /setKillerOn/{id}
     defaults: { _controller: GamesKillerBundle:Default:setKillerOn }
     
-games_killer_ajaxrq:
-    pattern:  /ajaxrq
-    defaults: { _controller: GamesKillerBundle:Default:ajaxrq}
+games_killer_ajaxrqSearchKiller:
+    pattern:  /ajaxrqSearchKiller
+    defaults: { _controller: GamesKillerBundle:Default:ajaxrqSearchKiller}
 
- 
+games_killer_ajaxrqValidatePlayer:
+    pattern:  /ajaxrqValidatePlayer
+    defaults: { _controller: GamesKillerBundle:Default:ajaxrqValidatePlayer}
