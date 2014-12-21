@@ -10,12 +10,14 @@
     <ul>
     	{% for killer in killers %}
     	{# On inclut la vue à chaque itération dans la boucle #}
-    		<div class="container">
-    			<p>
-    			     <a href="{{ path('games_killer_consultKiller', {'name': killer.name} ) }}">{{ killer.name }}</a>
-    			<p>
-    		</div>
-    		<hr />
+    	<h4>
+            <a href="{{ path('games_killer_consultKiller', {'name': killer.name} ) }}">{{ killer.name }}</a>
+    	</h4>
+		<div class="well">
+		    {% include "GamesKillerBundle:Default/Tool:displayAKillerInformations.html.twig" %}
+			
+		</div>
+		<hr />    
     	{% else %}
     		<p>
     		  Pas (encore !) de Killer? Allez Hop, par ici :
@@ -29,5 +31,5 @@
 
 
 {% block script %}
-    <script> $('#consultListKiller').addClass('active')</script>
+    <script> $('#consultListCreatedKiller').addClass('active')</script>
 {% endblock %}

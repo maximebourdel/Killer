@@ -8,21 +8,8 @@
 <div class="container">
     <h3>{{ killer.name }} est en cours!!</h3>
     
-    
     <div class="well">
-      {% if killer.dateBegin is not null %}
-        Date debut du Killer : {{ killer.dateBegin|date('Y-m-d') }}
-      {% endif %}
-      <br />
-      {% if killer.dateEnd is not null %}
-        Date fin du Killer : {{ killer.dateEnd|date('Y-m-d H:i:s') }}
-      {% endif %}
-      <br />
-        Est créé par {{ killer.userAdmin.username }}
-      <br />
-      {{ killer.adresse }}
-      <br />
-      
+        {% include "GamesKillerBundle:Default/Tool:displayAKillerInformations.html.twig" %}
     </div>
     
     {# On n'affiche les droits de gestion des participants #}

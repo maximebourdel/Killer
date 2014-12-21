@@ -6,6 +6,7 @@ games_killer:
     resource: "@GamesKillerBundle/Resources/config/routing.yml"
     prefix:   /
     
+     
     
 #UserBundle    
 fos_user_security:

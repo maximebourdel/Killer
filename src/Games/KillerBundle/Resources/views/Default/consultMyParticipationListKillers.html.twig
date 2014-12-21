@@ -1,0 +1,35 @@
+{# On étend notre layout #}
+{% extends "::layout.html.twig" %}
+
+
+
+{# Dans notre layout, il faut définir le block body #}
+{% block body %}
+<div class="container">
+    <h3>Voici la liste de vos partcipations aux Killers!</h3>
+    <ul>
+    	{% for killer in killers %}
+    	{# On inclut la vue à chaque itération dans la boucle #}
+    	<h4>
+            <a href="{{ path('games_killer_consultKiller', {'name': killer.name} ) }}">{{ killer.name }}</a>
+    	</h4>
+		<div class="well">
+		    {% include "GamesKillerBundle:Default/Tool:displayAKillerInformations.html.twig" %}
+			
+		</div>
+		<hr />    
+    	{% else %}
+    		<p>
+    		  Pas inscrit à un Killer? Allez Hop, par ici :
+    		  <a href="{{ path('games_killer_index' ) }}">Je veux participer à un killer!</a>
+    		</p>
+    	{% endfor %}
+    </ul>
+
+</div>
+{% endblock %}
+
+
+{% block script %}
+    <script> $('#consultParticipationListKiller').addClass('active')</script>
+{% endblock %}

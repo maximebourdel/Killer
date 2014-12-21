@@ -1,0 +1,15 @@
+
+{% if killer.dateBegin is not null %}
+    Date debut du Killer : {{ killer.dateBegin|date('Y-m-d') }}
+    <br />
+{% endif %}
+  
+{% if killer.dateEnd is not null %}
+    Date fin du Killer : {{ killer.dateEnd|date('Y-m-d H:i:s') }}
+    <br />
+{% endif %}
+  
+Est créé par {{ killer.userAdmin.username }}
+<br />
+{{ killer.adresse }}
+<br />

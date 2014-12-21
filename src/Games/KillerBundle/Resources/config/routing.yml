@@ -10,9 +10,13 @@ games_killer_consultKiller:
     path:     /myKillers/{name}
     defaults: { _controller: GamesKillerBundle:Default:consultKiller }
     
-games_killer_consultListKillers:
-    path:     /myKillers
-    defaults: { _controller: GamesKillerBundle:Default:consultListKillers }
+games_killer_consultCreatedListKillers:
+    path:     /myCreations
+    defaults: { _controller: GamesKillerBundle:Default:consultCreatedListKillers }
+    
+games_killer_consultParticipationListKillers:
+    path:     /myParticipations
+    defaults: { _controller: GamesKillerBundle:Default:consultParticipationListKillers }
     
 games_killer_setKillerOn:
     path:     /setKillerOn/{id}

@@ -8,33 +8,21 @@
 <div class="container">
     <h3>{{ killer.name }} est en cours!!</h3>
     
-    
     <div class="well">
-      {% if killer.dateBegin is not null %}
-        Date debut du Killer : {{ killer.dateBegin|date('Y-m-d') }}
-      {% endif %}
-      <br />
-      {% if killer.dateEnd is not null %}
-        Date fin du Killer : {{ killer.dateEnd|date('Y-m-d H:i:s') }}
-      {% endif %}
-      <br />
-        Est créé par {{ killer.userAdmin.username }}
-      <br />
-      {{ killer.adresse }}
-      <br />
-      
+        {% include "GamesKillerBundle:Default/Tool:displayAKillerInformations.html.twig" %}
     </div>
+    
     <ul>
-    {% if participants.playerToKill != null %}
-        <h5>Voici votre objectif</h5>
-  		
-	    <div class="well">
-	       Tu dois tuer <strong>{{ participants.playerToKill.user.username }}</strong> 
-	       avec <strong>{{ participants.playerToKill.object.name }}</strong>
-	    </div>	
-  	{% else %}
-  	    <h5>Félicitations vous êtes le grand gagnant!</h5>	
-	{% endif %}	
+        {% if participants.playerToKill != null %}
+            <h5>Voici votre objectif</h5>
+      		
+    	    <div class="well">
+    	       Tu dois tuer <strong>{{ participants.playerToKill.user.username }}</strong> 
+    	       avec <strong>{{ participants.playerToKill.object.name }}</strong>
+    	    </div>	
+      	{% else %}
+      	    <h5>Félicitations vous êtes le grand gagnant!</h5>	
+    	{% endif %}	
 	</ul>
 	
 	{% if playerEliminationForm != null and participants.playerToKill != null and participants.isDead == false %}

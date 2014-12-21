@@ -294,7 +294,7 @@ class DefaultController extends Controller
     
     
     //cette méthode affiche la liste des Killers
-    public function consultListKillersAction()
+    public function consultCreatedListKillersAction()
     {
         // On vérifie que l'utilisateur dispose bien du rôle ROLE_AUTEUR
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -311,7 +311,32 @@ class DefaultController extends Controller
             array('userAdmin' => $userId)
         );
         // Puis modifiez la ligne du render comme ceci, pour prendre en compte les variables :
-        return $this->render ( 'GamesKillerBundle:Default:consultListKillers.html.twig', array (
+        return $this->render ( 'GamesKillerBundle:Default:consultListCreatedKillers.html.twig', array (
+                'killers' => $killers,
+        ) );
+    }
+    
+    
+    //cette méthode affiche la liste des Killers
+    public function consultParticipationListKillersAction()
+    {
+        // On vérifie que l'utilisateur dispose bien du rôle ROLE_AUTEUR
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // Sinon on déclenche une exception « Accès interdit »
+            throw new AccessDeniedException('Accès limité aux personnes authentifiées.');
+        }
+    
+        // On récupere l'utilisateur actuel
+        $userId = $this->get('security.context')->getToken()->getUser()->getId();
+    
+       
+        
+        $killers = $this->getDoctrine()
+        ->getRepository('GamesKillerBundle:Killer')
+        ->findMyParticpationListKillers($userId);
+        
+        // Puis modifiez la ligne du render comme ceci, pour prendre en compte les variables :
+        return $this->render ( 'GamesKillerBundle:Default:consultMyParticipationListKillers.html.twig', array (
                 'killers' => $killers,
         ) );
     }

@@ -2,3 +2,10 @@ games_user_create:
     path:     /create
     defaults: { _controller: GamesUserBundle:Default:create }
     
+login:
+    pattern:   /login
+    defaults:  { _controller: GamesUserBundle:Default:login }
+
+register:
+    pattern:   /register
+    defaults:  { _controller: GamesUserBundle:Default:register }

@@ -12,18 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class KillerRepository extends EntityRepository
 {
-    public function getNbPlayersAllowed(Killer $killer)
-    {
-        $qb = $this->createQueryBuilder('p')->getScalarResult();
     
-        $qb->join('p.players', 'players')
+    public function findMyParticpationListKillers($userId)
+    {
+        $qb = $this->createQueryBuilder('k');
+    
+        $qb->join('k.players', 'players')
         ->addSelect('players');
-        
-        
-        $qb->where('players.isAllowed = true')
-        ->andWhere('p.killer = :id')
-        ->setParameter('id', $killer->getId())
-        ;
+    
+        $qb->where('players.user = :userid')
+        ->setParameter('userid', $userId);
     
         return $qb
         ->getQuery()

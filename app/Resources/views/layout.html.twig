@@ -38,11 +38,12 @@
 				<ul class="nav navbar-nav">	    
 				    <li id="index"><a href="{{ path('games_killer_index') }}">Accueil</a></li>
 	            	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                        <li id="consultListKiller"><a href="{{ path('games_killer_consultListKillers') }}">Voir mes Killers</a></li>
+                        <li id="consultListCreatedKiller"><a href="{{ path('games_killer_consultCreatedListKillers') }}">Voir mes Killers</a></li>
+                        <li id="consultListParticipationKiller"><a href="{{ path('games_killer_consultParticipationListKillers') }}">Voir mes Participations</a></li>
 	            	    <li id="createKiller"><a href="{{ path('games_killer_createKiller') }}">Créer un nouveau Killer</a></li>
 	            	    <li id="login"><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
 	            	{% else %}
-                        <li id="login"><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
+                        <li id="login"><a href="{{ path('login') }}">Connexion</a></li>
                         <li id="register"><a href="{{ path('fos_user_registration_register') }}">Nouveau?</a></li>
                     {% endif %}
                     
