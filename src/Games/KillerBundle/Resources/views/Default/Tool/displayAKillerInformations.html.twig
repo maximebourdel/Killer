@@ -1,15 +1,20 @@
 
 {% if killer.dateBegin is not null %}
-    Date debut du Killer : {{ killer.dateBegin|date('Y-m-d') }}
+    <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 
+    Date début le : {{ killer.dateBegin|date('d M Y') }}
     <br />
 {% endif %}
   
 {% if killer.dateEnd is not null %}
-    Date fin du Killer : {{ killer.dateEnd|date('Y-m-d H:i:s') }}
+    <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+    Date Fin le : {{ killer.dateEnd|date('d M Y') }}
     <br />
 {% endif %}
-  
+
+<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 Est créé par {{ killer.userAdmin.username }}
 <br />
+
+<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
 {{ killer.adresse }}
 <br />

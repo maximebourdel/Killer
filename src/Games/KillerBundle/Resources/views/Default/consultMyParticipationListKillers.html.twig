@@ -7,17 +7,20 @@
 {% block body %}
 <div class="container">
     <h3>Voici la liste de vos participations aux Killers!</h3>
-    <ul>
+    
+    <ul class="nav nav-pills nav-stacked">
     	{% for killer in killers %}
     	{# On inclut la vue à chaque itération dans la boucle #}
-    	<h4>
-            <a href="{{ path('games_killer_consultKiller', {'name': killer.name} ) }}">{{ killer.name }}</a>
-    	</h4>
+    	<li role="presentation">
+            <a  href="{{ path('games_killer_consultKiller', {'name': killer.name} ) }}">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                {{ killer.name }}
+            </a>
+        </li>
 		<div class="well">
-		    {% include "GamesKillerBundle:Default/Tool:displayAKillerInformations.html.twig" %}
-			
-		</div>
-		<hr />    
+		    {% include "GamesKillerBundle:Default/Tool:displayAKillerInformations.html.twig" %}	
+		</div>		
+		<hr />  
     	{% else %}
     		<p>
     		  Pas inscrit à un Killer? Allez Hop, par ici :

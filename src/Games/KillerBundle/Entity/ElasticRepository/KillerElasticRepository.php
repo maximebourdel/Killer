@@ -3,7 +3,6 @@
 namespace Games\KillerBundle\Entity\ElasticRepository;
 
 use FOS\ElasticaBundle\Repository;
-use Games\KillerBundle\Entity\Killer;
 
 class KillerElasticRepository extends Repository
 {
