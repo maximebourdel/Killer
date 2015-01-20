@@ -15,6 +15,7 @@
     {# On n'affiche pas le formulaire si l'utilisateur n'est pas admin 
     ET si participe déja #}
     {% if user is not null %}
+        {# Le user n'est pas admin et n'est pas inscrit #}
         {% if killer.userAdmin.id != user.id and newPlayer is not null %}
             {{ form_start(formParticipation) }}
             
@@ -24,7 +25,17 @@
             
             {# Fermeture de la balise <form> du formulaire HTML #}
             {{ form_end(formParticipation) }}
+        {# Le user n'est pas admin et est DEJA inscrit (LE KILLER N EST PAS COMMENCE)#}
+        {% elseif killer.userAdmin.id != user.id %}
+            <div class="well">
+    		<div class="col-sm-12">
+    		  <span class="glyphicon glyphicon-time"></span> 
+    		  Patience, le killer ne commencera que quand l'administrateur l'aura validé!
+    		</div>
+    		<br />
+		  </div>
         {% endif %}
+        
     {% endif %}
     
     {# On n'affiche les droits de gestion des participants #}
