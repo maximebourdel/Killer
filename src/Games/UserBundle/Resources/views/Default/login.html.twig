@@ -1,46 +1,53 @@
-{# src/OC/UserBundle/Resources/views/Security/login.html.twig #}
-
-{% extends "::layout.html.twig" %}
-
-{% block body %}
+{# src/OC/UserBundle/Resources/views/Security/login.html.twig #} {%
+extends "::layout.html.twig" %} {% block body %}
 <div class="container">
-  {# S'il y a une erreur, on l'affiche dans un joli cadre #}
-  {% if error %}
-    <div class="alert alert-danger">{{ error.message }}</div>
-  {% endif %}
-    <div class="row">
-        <div class="well"> 
-              {# Le formulaire, avec URL de soumission vers la route « login_check » comme on l'a vu #}
-              <form action="{{ path('fos_user_security_check') }}" method="post">
-              
-                <div class="col-sm-12">
-                    <div class="col-sm-2">
-                        <label for="username">Login :</label>
-                    </div>   
-                    
-                    <div class="col-sm-10">
-                        <input type="text" id="username" name="_username" value="{{ last_username }}" />
-                    </div>
-               </div> 
-                    <br />
-               <div class="col-sm-12">    
-                    <div class="col-sm-2">
-                        <label for="password">Mot de passe :</label>
-                    </div>
-                   
-                    <div class="col-sm-10">  
-                        <input type="password" id="password" name="_password" />
-                    </div>
-                 </div>   
-                    <br />
-                 <div class="col-sm-12">
-                        <input type="submit" value="Connexion" />
-                 </div>
-                    <br />
-                    <br />
-              </form>
-          </div>
-          <br />
-        </div>
-    </div>
+	{# S'il y a une erreur, on l'affiche dans un joli cadre #} {% if error
+	%}
+	<div class="alert alert-danger">{{ error.message }}</div>
+	{% endif %}
+	<div class="row">
+		<div class="well">
+			{# Le formulaire, avec URL de soumission vers la route « login_check
+			» comme on l'a vu #}
+			<form action="{{ path('fos_user_security_check') }}" method="post">
+
+				<div class="col-sm-12">
+					<div class="col-sm-2">
+						<label for="username">Login :</label>
+					</div>
+
+					<div class="col-sm-10">
+						<input type="text" id="username" name="_username"
+							value="{{ last_username }}" />
+					</div>
+				</div>
+				<br />
+				<div class="col-sm-12">
+					<div class="col-sm-2">
+						<label for="password">Mot de passe :</label>
+					</div>
+
+					<div class="col-sm-10">
+						<input type="password" id="password" name="_password" />
+					</div>
+				</div>
+				<br />
+				<div class="col-sm-12">
+					<input type="submit" value="Connexion" />
+				</div>
+				<br /> <br />
+			</form>
+		</div>
+		<br />
+		<div class="well">
+    		<div class="col-sm-12">
+    			Pas encore inscrit ? <a
+    				href="{{ path('fos_user_registration_register') }}"> <span
+    				class="glyphicon glyphicon-chevron-right"></span> Par ici!
+    			</a>
+    		</div>
+    		<br />
+		</div>
+	</div>
+</div>
 {% endblock %}
