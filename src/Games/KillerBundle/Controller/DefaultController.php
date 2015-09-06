@@ -501,6 +501,36 @@ class DefaultController extends Controller
         return $response;
     }
     
+    
+    public function ajaxrqGetAdresseCompleteAction() {
+    
+        $request = $this->container->get('request');
+    
+        if ($this->container->get('request')->isXmlHttpRequest()) {
+    
+            //Récuperer le choix que vous fait dans la liste déroulante "Pays : "
+            $latLng = $request->request->get('latLng');
+            //Faire la requête pour récurer la liste des ville du pays sélectionné, grâce à leur "id" (fr, ma, es..), insérer ce résultat dans $villes
+            
+            
+            \Doctrine\Common\Util\Debug::dump($value);
+            
+            //Instancier une "réponse" grâce à l'objet "Response"
+            $response = new Response(json_encode("http://maps.googleapis.com/maps/api/geocode/json?latlng=".$latLng));
+            
+        } else {
+            //Instancier une "réponse" grâce à l'objet "Response"
+            $response = new Response(json_encode("Erreur lors du chargement de la page"));   
+        }
+        
+        //Lui indiquer le type de format dans le quelle est envoyé la reponse
+        $response->headers->set('Content-Type', 'application/json');
+        
+        //Retourner la tout à notre liste déroulante
+        return $response;
+        
+    }
+    
 }
 
 

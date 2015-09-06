@@ -42,6 +42,7 @@ notre layout, il faut définir le block body #} {% block body %}
 
       {# Fermeture de la balise <form> du formulaire HTML #}
       {{ form_end(form) }}
+      
     </div>
     
     
@@ -65,7 +66,15 @@ notre layout, il faut définir le block body #} {% block body %}
           }
           map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
+          
+          
           google.maps.event.addListener(map, 'click', function(event) {
+
+         	  $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?latlng='+event.latLng.lat()+","+event.latLng.lng(),function(data) {
+        		    var location = data.results[0].formatted_address;
+        		    
+        		    document.getElementById("games_killerbundle_killer_adresse").value = location;        	  });
+              
               placeMarker(event.latLng);
           });
         }
@@ -82,8 +91,6 @@ notre layout, il faut définir le block body #} {% block body %}
     	  }
           map.setCenter(location); 
           
-          document.getElementById("games_killerbundle_killer_adresse").value = "ok";
-
           document.getElementById("games_killerbundle_killer_latitude").value = location.lat();
           document.getElementById("games_killerbundle_killer_longitude").value = location.lng();
         }

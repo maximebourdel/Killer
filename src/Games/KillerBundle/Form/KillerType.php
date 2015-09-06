@@ -15,11 +15,6 @@ class KillerType extends AbstractType
       ->add('adresse',  'text', array('read_only' => true))
       ->add('latitude',  'hidden')
       ->add('longitude',  'hidden')
-      ->add('players', 'collection', array(
-              'type'         => new PlayerType(),
-              'allow_add'    => true,
-              'allow_delete' => true
-      ))
       ->add('save',     'submit')
     ;
   }

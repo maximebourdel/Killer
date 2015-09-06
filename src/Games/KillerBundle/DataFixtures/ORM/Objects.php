@@ -14,7 +14,7 @@ class Objects implements FixtureInterface
   {
     // Liste des noms de catégorie à ajouter
   	$id = array('1', '2', '3', '4');
-    $name = array('Aspirateur', 'Voiture', 'Capote', 'Fer à repasser');
+    $name = array('un aspirateur', 'une voiture', 'une capote', 'un fer à repasser');
     
     
     

@@ -32,8 +32,8 @@
 
             //On lui donne la valeur du choix qu'on a fait, et id est la variable qui va contenir notre valeur, nous la retrouvons dans notre controller
             data: 'id='+{{ participant.id }}
-        }
-    )});
+        })
+     });
         
     $('#games_killerbundle_enablingPlayer'+{{ i }}+'_isAllowed_0').click(function() {
         $.ajax({

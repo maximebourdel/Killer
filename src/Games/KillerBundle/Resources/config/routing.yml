@@ -29,3 +29,7 @@ games_killer_ajaxrqSearchKiller:
 games_killer_ajaxrqValidatePlayer:
     pattern:  /ajaxrqValidatePlayer
     defaults: { _controller: GamesKillerBundle:Default:ajaxrqValidatePlayer}
+    
+games_killer_ajaxrqGetAdresseComplete:
+    pattern:  /ajaxrqGetAdresseComplete
+    defaults: { _controller: GamesKillerBundle:Default:ajaxrqGetAdresseComplete}
