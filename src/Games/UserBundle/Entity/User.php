@@ -20,6 +20,18 @@ class User extends BaseUser
    */
   protected $id;
   
+  /**
+   *
+   * @var string @ORM\Column(type="string", length=255, nullable=false)
+   */
+  private $firstName;
+  
+  /**
+   *
+   * @var string @ORM\Column(type="string", length=255, nullable=false)
+   */
+  private $name;
+  
   
   /**
    * Représente la liste des killers d'un user
@@ -34,6 +46,53 @@ class User extends BaseUser
   * @ORM\JoinColumn(nullable=false)
   */
   private $players;
+  
+  
+  
+  
+  /**
+   * Set name
+   *
+   * @param string $name
+   * @return User
+   */
+  public function setName($name) {
+      $this->name = $name;
+  
+      return $this;
+  }
+  
+  /**
+   * Get name
+   *
+   * @return string
+   */
+  public function getName() {
+      return $this->name;
+  }
+  
+  /**
+   * Set firstName
+   *
+   * @param string $firstName
+   * @return User
+   */
+  public function setFirstName($firstName) {
+      $this->firstName = $firstName;
+  
+      return $this;
+  }
+  
+  /**
+   * Get firstName
+   *
+   * @return string
+   */
+  public function getFirstName() {
+      return $this->firstName;
+  }
+  
+  
   
  
   public function addMyKiller(\Games\KillerBundle\Entity\Killer $killer)
@@ -52,8 +111,6 @@ class User extends BaseUser
   {
       return $this->myKillers;
   }
-  
-  
-  
+
   
 }
