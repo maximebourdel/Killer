@@ -51,7 +51,6 @@ class DefaultController extends Controller
         ) );
     }
     
-    
     //cette méthode crée une partie de Killer
     public function createKillerAction(Request $request)
     {
@@ -100,8 +99,6 @@ class DefaultController extends Controller
             throw new AccessDeniedException('Accès limité aux personnes authentifiées.');
         }
         
-        
-        
         //on récupere les valeurs du killer
         $killer = $this->getDoctrine()
             ->getRepository('GamesKillerBundle:Killer')
@@ -109,9 +106,7 @@ class DefaultController extends Controller
         
         // On récupere l'utilisateur actuel
         $user = $this->get('security.context')->getToken()->getUser();
-        
-        
-        
+                
         
         //On gere la création du formulaire d'un nouveau participant
         $newPlayer = new Player();
@@ -289,10 +284,6 @@ class DefaultController extends Controller
         }    
     }
     
-    
-    
-    
-    
     //cette méthode affiche la liste des Killers
     public function consultCreatedListKillersAction()
     {
@@ -315,8 +306,7 @@ class DefaultController extends Controller
                 'killers' => $killers,
         ) );
     }
-    
-    
+       
     //cette méthode affiche la liste des Killers
     public function consultParticipationListKillersAction()
     {
@@ -329,7 +319,6 @@ class DefaultController extends Controller
         // On récupere l'utilisateur actuel
         $userId = $this->get('security.context')->getToken()->getUser()->getId();
     
-       
         
         $killers = $this->getDoctrine()
         ->getRepository('GamesKillerBundle:Killer')
@@ -340,7 +329,6 @@ class DefaultController extends Controller
                 'killers' => $killers,
         ) );
     }
-    
     
     //le killer est commencé
     public function setKillerOnAction(Request $request, $id)
@@ -353,17 +341,18 @@ class DefaultController extends Controller
         
         $user = $this->get('security.context')->getToken()->getUser(); 
         
-        //on récupere les valeurs du killer
+        //on récupere les valeurs des joueurs
         $allowedPlayers = $this->getDoctrine()
         ->getRepository('GamesKillerBundle:Player')
         ->findAllowedPlayers($id);
         
+        //on récupere les valeurs du killer
         $killer = $this->getDoctrine()
         ->getRepository('GamesKillerBundle:Killer')
         ->findOneById($id);
         
         
-        //on récupere les valeurs du killer
+        //on récupere les valeurs des objets
         $objects = $this->getDoctrine()
         ->getRepository('GamesKillerBundle:Object')
         ->findAll();
@@ -427,7 +416,6 @@ class DefaultController extends Controller
         
     }
     
- 
     public function ajaxrqSearchKillerAction() {
 
         //Déclarer un tableau de type Array
@@ -464,7 +452,6 @@ class DefaultController extends Controller
         return $response;
     }
    
-    
     public function ajaxrqValidatePlayerAction() {
         
         $request = $this->container->get('request');
@@ -500,8 +487,7 @@ class DefaultController extends Controller
         //Retourner la tout à notre liste déroulante
         return $response;
     }
-    
-    
+   
     public function ajaxrqGetAdresseCompleteAction() {
     
         $request = $this->container->get('request');

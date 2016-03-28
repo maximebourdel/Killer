@@ -2,7 +2,9 @@
 
     <div class="row">
         <div class="col-sm-6">
-            {{ participant.user.username }}
+            {{ participant.user.firstName }}
+            <br />
+            {{ participant.user.name }}
         </div>
         <div class="col-sm-6">
             {{ form_start(formParticipants[i], {'attr': {'class': 'form-vertival'}}) }}

@@ -10,10 +10,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="Games\KillerBundle\Entity\PlayerRepository")
+ * @UniqueEntity(fields={"user", "killer"})
+ * @ORM\Table(uniqueConstraints={
+ *      @ORM\UniqueConstraint(columns={"user_id", "killer_id"})
+ * })
  */
 class Player
 {
-
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -25,13 +28,13 @@ class Player
 
     /**
      * @ORM\ManyToOne(targetEntity="Games\UserBundle\Entity\User", inversedBy="players")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Games\KillerBundle\Entity\Killer", inversedBy="players")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="Games\KillerBundle\Entity\Killer", inversedBy="players", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $killer;
     
@@ -66,6 +69,7 @@ class Player
 
     /**
      * @ORM\ManyToOne(targetEntity="Games\KillerBundle\Entity\Player", inversedBy="player")
+     * @ORM\joinColumn(onDelete="SET NULL")
      */
     private $playerToKill;
     

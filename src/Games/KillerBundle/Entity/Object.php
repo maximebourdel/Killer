@@ -31,6 +31,7 @@ class Object
 
     /**
      * @ORM\OneToOne(targetEntity="Games\KillerBundle\Entity\Image", cascade={"persist"})
+     * @ORM\joinColumn(onDelete="CASCADE")
      */
     private $image;
     

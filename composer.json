@@ -10,8 +10,8 @@
 		}
 	},
 	"require" : {
-		"php" : ">=5.3.3",
-		"symfony/symfony" : "2.6.*",
+		"php" : ">=5.5.9",
+		"symfony/symfony" : "2.8.*",
 		"doctrine/orm" : "~2.2,>=2.2.3",
 		"doctrine/doctrine-bundle" : "~1.2",
 		"twig/extensions" : "~1.0",
@@ -29,7 +29,8 @@
 		"jms/serializer-bundle" : "0.12.0"
 	},
 	"require-dev" : {
-		"sensio/generator-bundle" : "~2.3"
+		"sensio/generadtor-bundle" : "~2.3",
+		"doctrine/doctrine-fixtures-bundle": "~2.3"
 	},
 	"scripts" : {
 		"post-install-cmd" : [

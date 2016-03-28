@@ -31,7 +31,7 @@ class Killer {
 	
 	/**
 	 * @ORM\ManyToOne(targetEntity="Games\UserBundle\Entity\User", inversedBy="myKillers")
-	 * @ORM\JoinColumn(nullable=false)
+	 * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
 	 */
 	private $userAdmin;
 	
@@ -42,7 +42,6 @@ class Killer {
 	private $players;
 	
 	/**
-	 *
 	 * @var string @ORM\Column(name="name", type="string", length=255, unique=true)
 	 */
 	private $name;

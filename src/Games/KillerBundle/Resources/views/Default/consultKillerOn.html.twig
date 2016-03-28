@@ -18,12 +18,18 @@
             <h5>Voici la liste des participants en course !</h5>
       		{% for participant in participants %}
         	    <div class="well">
-        	    
-        	       <span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span>
-        	       <strong>{{ participant.user.username }}</strong>
-        	       doit tuer <strong>{{ participant.playerToKill.user.username }}</strong> 
-        	       avec <strong>{{ participant.playerToKill.object.name }}</strong>
-        	       
+        	       {% if participant.isDead %}
+        	           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            	       <strong>{{ participant.user.firstName }} {{ participant.user.name }}</strong> 
+            	       a été tué le {{ participant.deathDate|date('d/m/Y à H:i') }}.
+            	       Il avait tué {{ participant.numKills }} personnes.
+        	       {% else %}
+            	       <span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span>
+            	       <strong>{{ participant.user.firstName }} {{ participant.user.name }}</strong>
+            	       doit tuer <strong>{{ participant.playerToKill.user.firstName }} {{ participant.playerToKill.user.Name }}</strong> 
+            	       avec <strong>{{ participant.playerToKill.object.name }}</strong>.
+            	       Il a actuellement tué {{ participant.numKills }} personnes.
+                   {% endif %}
         	    </div>	
       		{% endfor %}
     	</ul>
