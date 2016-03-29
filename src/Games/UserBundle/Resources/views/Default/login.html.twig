@@ -1,5 +1,7 @@
-{# src/OC/UserBundle/Resources/views/Security/login.html.twig #} {%
-extends "::layout.html.twig" %} {% block body %}
+{# On étend notre layout #}
+{% extends "::layout.html.twig" %}
+ 
+{% block body %}
 <div class="container">
 	{# S'il y a une erreur, on l'affiche dans un joli cadre #} {% if error
 	%}
@@ -42,7 +44,7 @@ extends "::layout.html.twig" %} {% block body %}
 		<div class="well">
     		<div class="col-sm-12">
     			Pas encore inscrit ? <a
-    				href="{{ path('fos_user_registration_register') }}"> <span
+    				href="{{ path('games_user_create') }}"> <span
     				class="glyphicon glyphicon-chevron-right"></span> Par ici!
     			</a>
     		</div>

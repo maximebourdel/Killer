@@ -81,10 +81,13 @@ class DefaultController extends Controller
             $em->persist($killer);
             
             $em->flush();
-               
+            
+            //Ajout de la notification
+            $this->get('session')->getFlashBag()->add('success', 'Votre killer a bien créé');
+            
             return $this->redirect($this->generateUrl('games_killer_consultKiller', array('name' => $killer->getName())));
        }
-    
+
         return $this->render('GamesKillerBundle:Default:createKiller.html.twig', array(
                 'form' => $form->createView(),
         ));

@@ -35,10 +35,10 @@ class LoadPlayerData extends AbstractFixture implements FixtureInterface, Ordere
             , array('user4', 'killer4', 0, 'JMPOZR', date_create("2016-03-27 23:48:42"), 1, 1, 'object5')//15
             , array('user5', 'killer4', 0, 'KPLGHF', date_create("2016-03-27 23:50:58"), 1, 1, 'object0')//16
             
-            , array('user2', 'killer5', 2, 'KQNSDJ', NULL, 0, 1, 'object5')//13
-            , array('user3', 'killer5', 1, 'LIQNET', date_create("2016-03-29 01:50:42"), 1, 1, 'object0')//14
-            , array('user4', 'killer5', 0, 'JMPOZR', date_create("2016-03-28 23:48:42"), 1, 1, 'object5')//15
-            , array('user5', 'killer5', 0, 'KPLGHF', date_create("2016-03-28 23:48:42"), 1, 1, 'object0')//16
+            , array('user2', 'killer5', 2, 'KQNSDJ', NULL, 0, 1, 'object5')//17
+            , array('user3', 'killer5', 1, 'LIQNET', date_create("2016-03-29 01:50:42"), 1, 1, 'object0')//18
+            , array('user4', 'killer5', 0, 'JMPOZR', date_create("2016-03-28 23:48:42"), 1, 1, 'object5')//19
+            , array('user5', 'killer5', 0, 'KPLGHF', date_create("2016-03-28 23:48:42"), 1, 1, 'object0')//20
         );
         
         foreach ($listPlayers as $key => $values) {

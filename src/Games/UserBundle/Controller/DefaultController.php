@@ -22,7 +22,7 @@ class DefaultController extends Controller
     
     public function createAction(Request $request)
     {
-    /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
+        /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
         $formFactory = $this->get('fos_user.registration.form.factory');
         /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
         $userManager = $this->get('fos_user.user_manager');
@@ -51,12 +51,15 @@ class DefaultController extends Controller
             $userManager->updateUser($user);
 
             if (null === $response = $event->getResponse()) {
-                $url = $this->generateUrl('fos_user_registration_confirmed');
+                $url = $this->generateUrl('games_killer_index');
                 $response = new RedirectResponse($url);
             }
-
+            
             $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
-
+            
+            //Modification de la notification
+            $this->get('session')->getFlashBag()->set('success', 'Votre compte a bien créé');
+            
             return $response;
         }
     
