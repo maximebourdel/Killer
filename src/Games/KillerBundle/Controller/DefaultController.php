@@ -126,7 +126,6 @@ class DefaultController extends Controller
         } 
         
         
-        
         //si la personne a déja participé, on définit à null le player
         $isPlayerExists = $this->getDoctrine()
             ->getRepository('GamesKillerBundle:Player')
@@ -135,7 +134,6 @@ class DefaultController extends Controller
                     'killer' => $killer
             ));
         if ( $isPlayerExists != null ){ $newPlayer = null; }
-            
 
        
         $participants = null;
@@ -211,21 +209,14 @@ class DefaultController extends Controller
                                 
                 //si le joueur est inscrit
                 if ($player != null) {
-                    
                     //le joueur a été accepté
                     if ( $player->getIsAllowed() == true ){
-                            
                         
                             $playerEliminationForm = $this->get('form.factory')->create(new PlayerEliminationType, new Player());
                             
-                            
                             if ($playerEliminationForm->handleRequest($request)->isValid()) {
                                 
-                                
                                 $playerToKill = $player->getPlayerToKill(); 
-                                    
-
-                                
                                 
                                 //on vérifie que le mdp entré est le bon    
                                 if ($playerEliminationForm['password']->getData() == $playerToKill->getPassword()){
@@ -259,8 +250,6 @@ class DefaultController extends Controller
                                     return $this->redirect($this->generateUrl('games_killer_consultKiller', array('name' => $killer->getName())));
                                  }
                                       
-                                    
-                           
                         }
                         
                         $playerEliminationForm = $playerEliminationForm->createView();
@@ -274,15 +263,13 @@ class DefaultController extends Controller
                                 'playerEliminationForm' => $playerEliminationForm,
                                 
                         ) );
-                
+                        
                     } else {
                         throw new AccessDeniedException('Désolé, ce killer est déja commencé et vous n\'avez pas été accepté :(');
                     }
-                
                 } else {
-                    throw new AccessDeniedException('Désolé, ce killer est déja commencé :/');
+                    throw new AccessDeniedException('Désolé, ce killer est déja commencé et les inscriptions sont closes :/');
                 }
-                
             }
         }    
     }
@@ -517,15 +504,6 @@ class DefaultController extends Controller
         
         //Retourner la tout à notre liste déroulante
         return $response;
-        
     }
     
 }
-
-
-
-
-
-
-
-    

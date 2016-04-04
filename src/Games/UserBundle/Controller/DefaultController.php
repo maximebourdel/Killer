@@ -62,7 +62,8 @@ class DefaultController extends Controller
             
             return $response;
         }
-    
+        
+       
         // On passe la méthode createView() du formulaire à la vue
         // afin qu'elle puisse afficher le formulaire toute seule
         return $this->render('GamesUserBundle:Default:create.html.twig', array(
@@ -75,13 +76,29 @@ class DefaultController extends Controller
     {
         /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
         $session = $request->getSession();
-    
+        /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
+        $userManager = $this->get('fos_user.user_manager');
+        
+        // Dernier Login entré par l'utilisateur
+        $lastUsername = (null === $session) ? '' : $session->get(SecurityContextInterface::LAST_USERNAME);
+        
         // get the error if any (works with forward and redirect -- see below)
         if ($request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(SecurityContextInterface::AUTHENTICATION_ERROR);
+        // Erreur après soumission du formulaire   
         } elseif (null !== $session && $session->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
+            
             $error = $session->get(SecurityContextInterface::AUTHENTICATION_ERROR);
             $session->remove(SecurityContextInterface::AUTHENTICATION_ERROR);
+           
+            //Utilisateur non présent dans la BDD
+            if ($userManager->findUserByUsername($lastUsername) == null ) {
+                $this->get('session')->getFlashBag()->add('warning', 'Mauvais login');
+                //Utilisateur présent, mauvais mot de passe
+            } else {
+                $this->get('session')->getFlashBag()->add('warning', 'Mot de passe incorrect');
+            }
+        // Pas d'erreur
         } else {
             $error = null;
         }
@@ -90,13 +107,16 @@ class DefaultController extends Controller
             $error = null; // The value does not come from the security component.
         }
     
-        // last username entered by the user
-        $lastUsername = (null === $session) ? '' : $session->get(SecurityContextInterface::LAST_USERNAME);
-    
+       
         $csrfToken = $this->has('form.csrf_provider')
         ? $this->get('form.csrf_provider')->generateCsrfToken('authenticate')
         : null;
     
+        if ( $request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
+            
+        }
+        
+        
         return $this->render('GamesUserBundle:Default:login.html.twig', array(
           // Valeur du précédent nom d'utilisateur entré par l'internaute
           'last_username' => $session->get(SecurityContext::LAST_USERNAME),

@@ -69,25 +69,22 @@
         {% endfor %}
     {% endfor %}
     
-    {% block body %}
-	    	
-    {% endblock %}
-    
+    {% block body %}{% endblock %}
+
+    {% block script %}{% endblock %}
     
     {% javascripts
-       	'@GamesKillerBundle/Resources/public/js/main.js'
+   	    '@GamesKillerBundle/Resources/public/js/main.js'
     %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
     
-    {% block script %}
     
-    {% endblock %}
     
     <div class="container">
         <br />
         <br />
-    	© Maxime Bourdel 2014 Tous droits réservés
+    	© Maxime Bourdel {{ "now"|date("Y") }} Tous droits réservés
     </div>
   
   </body>
