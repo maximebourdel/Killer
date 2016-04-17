@@ -15,7 +15,7 @@ notre layout, il faut définir le block body #} {% block body %}
     
         {# Affichage des erreurs pour ce champ précis. #}
         {{ form_errors(form.name) }}
-    
+    {{ session }}
         <div class="col-sm-7">
           {# Génération de l'input. #}
           {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
@@ -25,7 +25,7 @@ notre layout, il faut définir le block body #} {% block body %}
       {# Idem pour un autre champ. #}
       <div class="form-group">
         {{ form_label(form.adresse, "Adresse de votre Killer", {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
-        {{ form_errors(form.name) }}
+        {{ form_errors(form.adresse) }}
           
         <div class="col-sm-7">
           {{ form_widget(form.adresse, {'attr': {'class': 'form-control'}}) }}
@@ -47,6 +47,7 @@ notre layout, il faut définir le block body #} {% block body %}
     
     
     <div class="well col-sm-6">
+        <b>Cliquez sur l'endroit précis de la Map pour situer votre Killer.</b>
 	    <div id="map-canvas" style="width:500px;height:500px;"></div>
 	  </div>
     </div>
@@ -70,10 +71,11 @@ notre layout, il faut définir le block body #} {% block body %}
           
           google.maps.event.addListener(map, 'click', function(event) {
 
-         	  $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?latlng='+event.latLng.lat()+","+event.latLng.lng(),function(data) {
+        	  $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?latlng='+event.latLng.lat()+","+event.latLng.lng(),function(data) {
         		    var location = data.results[0].formatted_address;
         		    
-        		    document.getElementById("games_killerbundle_killer_adresse").value = location;        	  });
+        		    document.getElementById("games_killerbundle_killer_adresse").value = location;        	  
+        	  });
               
               placeMarker(event.latLng);
           });
@@ -98,5 +100,5 @@ notre layout, il faut définir le block body #} {% block body %}
         google.maps.event.addDomListener(window, 'load', initialize);
     </script>
     
-     <script> $('#createKiller').addClass('active')</script>
+     <script> $('#createKiller').addClass('active');</script>
 {% endblock %}
