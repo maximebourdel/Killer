@@ -5,25 +5,9 @@
 	
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
-	    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 		
-		{% stylesheets 
-			filter='cssrewrite,?yui_css' '@MopaBootstrapBundle/Resources/public/css/*'%}
-			<link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
-		{% endstylesheets %}
 		
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-		
-		
-		{% javascripts
-		    '@MopaBootstrapBundle/Resources/public/js/*.js'
-       		'@GamesKillerBundle/Resources/public/js/main.js'
-   		%}
-        	<script src="{{ asset_url }}"></script>
-    	{% endjavascripts %}
-
 		
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>{% block title %}Killer{% endblock %}</title>
@@ -32,6 +16,16 @@
   <body>
   
 	  <nav role="navigation" class="navbar navbar-inverse">
+	    <div class="navbar-header">
+		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+			   <span class="icon-bar">
+			   </span> 
+			   <span class="icon-bar">
+			   </span> 
+			   <span class="icon-bar">
+			   </span>
+		    </button>
+		</div>
 		<div class="container-fluid">
 	 		<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse">
@@ -68,11 +62,16 @@
 
     {% block script %}{% endblock %}
     
-    {% javascripts
-   	    '@GamesKillerBundle/Resources/public/js/main.js'
-    %}
-        <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+    
+    {#% penser à lancer la commande app/console mopa:bootstrap:symlink:less %#}
+	{% javascripts
+	    '@MopaBootstrapBundle/Resources/bootstrap/js/*.js'
+   		'@GamesKillerBundle/Resources/public/js/main.js'
+	%}
+    	<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
     
     
     
