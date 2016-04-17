@@ -29,8 +29,8 @@
 		"jms/serializer-bundle" : "0.12.0"
 	},
 	"require-dev" : {
-		"sensio/generadtor-bundle" : "~2.3",
-		"doctrine/doctrine-fixtures-bundle": "~2.3"
+		"sensio/generator-bundle" : "~2.3",
+		"doctrine/doctrine-fixtures-bundle" : "~2.3"
 	},
 	"scripts" : {
 		"post-install-cmd" : [
