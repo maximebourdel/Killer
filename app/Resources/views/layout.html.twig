@@ -65,9 +65,9 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
     
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     {#% penser à lancer la commande app/console mopa:bootstrap:symlink:less %#}
 	{% javascripts
-	    '@MopaBootstrapBundle/Resources/bootstrap/js/*.js'
    		'@GamesKillerBundle/Resources/public/js/main.js'
 	%}
     	<script src="{{ asset_url }}"></script>
