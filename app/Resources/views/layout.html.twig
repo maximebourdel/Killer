@@ -10,11 +10,7 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 		
 		{% stylesheets 
-			filter='cssrewrite,?yui_css' '@MopaBootstrapBundle/Resources/bootstrap/dist/css/*'%}
-			<link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
-		{% endstylesheets %}
-		{% stylesheets 
-			filter='cssrewrite,?yui_css' '@MopaBootstrapBundle/Resources/bootstrap/docs/assets/css/*'%}
+			filter='cssrewrite,?yui_css' '@MopaBootstrapBundle/Resources/public/css/*'%}
 			<link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
 		{% endstylesheets %}
 		
@@ -22,8 +18,7 @@
 		
 		
 		{% javascripts
-		    '@MopaBootstrapBundle/Resources/bootstrap/js/tooltip.js'
-       		'@MopaBootstrapBundle/Resources/bootstrap/js/*'
+		    '@MopaBootstrapBundle/Resources/public/js/*.js'
        		'@GamesKillerBundle/Resources/public/js/main.js'
    		%}
         	<script src="{{ asset_url }}"></script>
