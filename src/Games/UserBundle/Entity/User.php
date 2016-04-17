@@ -37,7 +37,7 @@ class User extends BaseUser
    * Représente la liste des killers d'un user
    * 
    * @ORM\OneToMany(targetEntity="Games\KillerBundle\Entity\Killer", mappedBy="userAdmin", cascade={"persist"})
-   * @ORM\joinColumn(onDelete="CASCADE")
+   * @ORM\JoinColumn(onDelete="CASCADE")
    */
   private $myKillers; //avec un s car plusieurs
   
