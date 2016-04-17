@@ -15,7 +15,7 @@ notre layout, il faut définir le block body #} {% block body %}
     
         {# Affichage des erreurs pour ce champ précis. #}
         {{ form_errors(form.name) }}
-    {{ session }}
+        
         <div class="col-sm-7">
           {# Génération de l'input. #}
           {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
