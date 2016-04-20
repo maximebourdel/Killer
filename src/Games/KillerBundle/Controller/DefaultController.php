@@ -83,7 +83,7 @@ class DefaultController extends Controller
             $em->flush();
             
             //Ajout de la notification
-            $this->get('session')->getFlashBag()->add('success', 'Votre killer a bien créé');
+            $this->get('session')->getFlashBag()->add('success', 'Votre killer a bien été créé');
             
             return $this->redirect($this->generateUrl('games_killer_consultKiller', array('name' => $killer->getName())));
        }
