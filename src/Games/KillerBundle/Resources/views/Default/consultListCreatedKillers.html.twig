@@ -22,10 +22,18 @@
 		</div>		
 		<hr />    
     	{% else %}
-    		<p>
-    		  Pas (encore !) de Killer ? Allez Hop, par ici :
-    		  <a href="{{ path('games_killer_createKiller' ) }}">Je veux créer un killer!</a>
-    		</p>
+            <div class="well">
+    		  <div class="col-sm-12">
+    		      <p>
+        		      Pas (encore !) de Killer ? Allez Hop, par ici :
+        		      <a href="{{ path('games_killer_createKiller' ) }}">
+        		          <span class="glyphicon glyphicon-chevron-right"></span>
+        		          Je veux créer un killer!
+        		      </a>
+    		      </p>
+    		  </div>
+    		  <br />
+    	    </div>
     	{% endfor %}
     </ul>
 

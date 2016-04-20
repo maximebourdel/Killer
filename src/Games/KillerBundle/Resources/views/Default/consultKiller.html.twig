@@ -28,12 +28,12 @@
         {# Le user n'est pas admin et est DEJA inscrit (LE KILLER N EST PAS COMMENCE)#}
         {% elseif killer.userAdmin.id != user.id %}
             <div class="well">
-    		<div class="col-sm-12">
-    		  <span class="glyphicon glyphicon-time"></span> 
-    		  Patience, le Killer ne commencera que quand l'administrateur l'aura validé !
-    		</div>
-    		<br />
-		  </div>
+    		  <div class="col-sm-12">
+    		      <span class="glyphicon glyphicon-time"></span> 
+    		      Patience, le Killer ne commencera que quand l'administrateur l'aura validé !
+    		  </div>
+    		  <br />
+		     </div>
         {% endif %}
         
     {% endif %}
