@@ -24,8 +24,6 @@ class PlayerEnablingType extends AbstractType
             'expanded' => true,
             'choices' => array(true => 'autoriser', false => 'refuser'),
         ))  
-        
-        ->add('save',     'submit', array('label' => 'Valider'))
       ;
   }
 
