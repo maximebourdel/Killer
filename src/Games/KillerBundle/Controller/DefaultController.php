@@ -328,6 +328,8 @@ class DefaultController extends Controller
             // Sinon on déclenche une exception « Accès interdit »
             throw new AccessDeniedException('Accès limité aux personnes authentifiées.');
         }
+
+        $em = $this->getDoctrine()->getManager();
         
         $user = $this->get('security.context')->getToken()->getUser(); 
         
@@ -380,8 +382,6 @@ class DefaultController extends Controller
            //on enleve l'objet de la liste pour qu'il ne soit utilisé qu'une fois
            array_splice($objects, $randomIndex, 1);
            
-           $em = $this->getDoctrine()->getManager();
-                    
            $em->persist($allowedPlayer);    
            
         }
