@@ -11,14 +11,17 @@
         {# {{ form(form) }} #}      
         <form method="post" name="games_userbundle_user">
             <fieldset>
-                <legend>Veuillez entrer les informations suivantes :</legend>
+                <legend>Veuillez entrer les informations suivantes : </legend>
                 {{ form_row(form.username) }}
                 {{ form_row(form.firstName) }}
                 {{ form_row(form.name) }}
                 {{ form_row(form.plainpassword) }}
                 {{ form_row(form.email) }}
                 <br />
-                <input name="games_userbundle_user[save]" id="games_userbundle_user_save" type="submit" value="Enregistrer" />
+                <button class="btn btn btn-primary" name="games_userbundle_user[save]" id="games_userbundle_user_save" type="submit">
+                    Enregistrer
+                </button>
+
                 {{ form_widget(form._token) }}
             </fieldset>
         </form>
