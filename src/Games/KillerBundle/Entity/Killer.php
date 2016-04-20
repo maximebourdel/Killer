@@ -52,6 +52,13 @@ class Killer {
 	private $nbParticipants;
 	
 	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="dateCreation", type="datetime", nullable=false)
+	 */
+	private $dateCreation;
+	
+	/**
      * @var \DateTime
 	 *
 	 * @ORM\Column(name="dateBegin", type="datetime", nullable=true)
@@ -90,9 +97,8 @@ class Killer {
 	public function __construct()
 	{
 	    $this->nbParticipants = 0;
+	    $this->dateCreation = new \DateTime();
 	}
-	
-	
 	
 	
 	
@@ -174,6 +180,27 @@ class Killer {
 	    return $this->nbParticipants;
 	}
 	
+
+	/**
+	 * Set dateCreation
+	 *
+	 * @param string $dateCreation
+	 * @return Killer
+	 */
+	public function setDateCreation($dateCreation) {
+	    $this->dateCreation = $dateCreation;
+	
+	    return $this;
+	}
+	
+	/**
+	 * Get dateCreation
+	 *
+	 * @return string
+	 */
+	public function getDateCreation() {
+	    return $this->dateCreation;
+	}
 	
 	/**
 	 * Set dateBegin

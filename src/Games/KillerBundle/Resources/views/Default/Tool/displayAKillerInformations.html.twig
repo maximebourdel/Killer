@@ -1,3 +1,6 @@
+<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+A été créé le : {{ killer.dateCreation|date('d M Y') }}
+<br />
 
 {% if killer.dateBegin is not null %}
     <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 
@@ -12,7 +15,7 @@
 {% endif %}
 
 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-Est créé par {{ killer.userAdmin.username }}
+Est créé par : {{ killer.userAdmin.username }}
 <br />
 
 <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
