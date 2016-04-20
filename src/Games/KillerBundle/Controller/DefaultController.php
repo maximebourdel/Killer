@@ -158,7 +158,6 @@ class DefaultController extends Controller
                     $formParticipants[] = $this->get('form.factory')->create($formType, $participant);
                     
                     //la vérification de ce formulaire est effectuée dans la vue pour les participants en AJAX
-                    
                     $formParticipants[$i] = $formParticipants[$i]->createView();
                 }
             
@@ -246,7 +245,7 @@ class DefaultController extends Controller
                                  //cas d'un mauvais mot de passe
                                  } else {
                                     // On définit un message flash
-                                    $this->get ( 'session' )->getFlashBag ()->add ( 'notice', 'Mauvais mot de passe' );
+                                    $this->get ( 'session' )->getFlashBag ()->add ( 'warning', 'Mauvais mot de passe' );
                                     return $this->redirect($this->generateUrl('games_killer_consultKiller', array('name' => $killer->getName())));
                                  }
                                       
@@ -343,7 +342,15 @@ class DefaultController extends Controller
         ->getRepository('GamesKillerBundle:Killer')
         ->findOneById($id);
         
+        // Il faut 2 participants autorisés au minimum pour lancer le jeu
+        if (sizeof($allowedPlayers) < 2 ) {
+            // Sinon on ne déclenche pas le Killer
+            $this->get ( 'session' )->getFlashBag ()->add ( 'warning', 'Vous devez autoriser au moins deux participants.' );
+            
+            return $this->redirect($this->generateUrl('games_killer_consultKiller', array('name' => $killer->getName())));
+        }
         
+       
         //on récupere les valeurs des objets
         $objects = $this->getDoctrine()
         ->getRepository('GamesKillerBundle:Object')

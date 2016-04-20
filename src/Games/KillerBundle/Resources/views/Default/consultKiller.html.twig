@@ -30,7 +30,7 @@
             <div class="well">
     		<div class="col-sm-12">
     		  <span class="glyphicon glyphicon-time"></span> 
-    		  Patience, le killer ne commencera que quand l'administrateur l'aura validé !
+    		  Patience, le Killer ne commencera que quand l'administrateur l'aura validé !
     		</div>
     		<br />
 		  </div>
@@ -59,9 +59,13 @@
     	{% if killer.dateBegin is null and participants |length > 1%}
     	 <br />
     	 <a href="{{ path('games_killer_setKillerOn', {'id': killer.id} ) }}">
-    	   <button>Que les jeux commencent!!</button>
+    	   <button class="btn btn btn-primary" type="submit">Que les jeux commencent!!</button>  
     	 </a>
-    	      	   
+    	{% else %}   
+    	   <div class="col-sm-12">
+    		 <span class="glyphicon glyphicon-time"></span> 
+    		  Un Killer ne peut être commencé que si il a au moins deux participants !
+    		</div>	
     	{% endif %}
 	
     {% endif %}
