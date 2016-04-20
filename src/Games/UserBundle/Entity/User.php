@@ -8,8 +8,11 @@ use FOS\UserBundle\Model\User as BaseUser;
 
 use Games\KillerBundle\Entity\Killer;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 /**
  * @ORM\Entity
+ * @UniqueEntity(fields="username", message="Ce nom d'utilisateur existe déjà.")
  */
 class User extends BaseUser
 {

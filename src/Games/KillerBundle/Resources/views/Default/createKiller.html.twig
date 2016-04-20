@@ -1,21 +1,20 @@
 {# On étend notre layout #} {% extends "::layout.html.twig" %} {# Dans
 notre layout, il faut définir le block body #} {% block body %}
 <div class="container">
+{# Les erreurs générales du formulaire. #}
+    
 	<h3>Crééz une nouvelle partie de Killer, c'est par ici !!!</h3>
-	
+
 	<div class="well col-sm-6">
       {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
-    
-      {# Les erreurs générales du formulaire. #}
       {{ form_errors(form) }}
-    
       <div class="form-group">
         {# Génération du label. #}
         {{ form_label(form.name, "Nom de votre Killer", {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
-    
-        {# Affichage des erreurs pour ce champ précis. #}
-        {{ form_errors(form.name) }}
-        
+        <div class="col-sm-7">
+            {# Affichage des erreurs pour ce champ précis. #}
+            {{ form_errors(form.name) }}
+        </div>     
         <div class="col-sm-7">
           {# Génération de l'input. #}
           {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
@@ -25,8 +24,9 @@ notre layout, il faut définir le block body #} {% block body %}
       {# Idem pour un autre champ. #}
       <div class="form-group">
         {{ form_label(form.adresse, "Adresse de votre Killer", {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
-        {{ form_errors(form.adresse) }}
-          
+        <div class="col-sm-7">
+            {{ form_errors(form.adresse) }}
+        </div>      
         <div class="col-sm-7">
           {{ form_widget(form.adresse, {'attr': {'class': 'form-control'}}) }}
         </div>
