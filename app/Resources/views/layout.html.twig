@@ -11,9 +11,13 @@
 		
 		<link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
 		
+		
 		{% javascripts
    		   '@GamesKillerBundle/Resources/public/js/main.js'
 	    %}
+		  <script src="{{ asset_url }}"></script>
+	    {% endjavascripts %}
+    
 		
 		<title>{% block title %}Killer{% endblock %}</title>
 		
@@ -71,9 +75,7 @@
     
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     {#% penser à lancer la commande app/console mopa:bootstrap:symlink:less %#}
-    	<script src="{{ asset_url }}"></script>
-	{% endjavascripts %}
-    
+    	
     {% block body %}{% endblock %}
 
     {% block script %}{% endblock %}    

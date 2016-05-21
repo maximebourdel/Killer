@@ -93,6 +93,21 @@ Les assets (raccourcis) seront eux aussi générés.
 
 Il faut ensuite renseigner les éléments essentiels pour la connexion puis le site sera opérationnel !
 
+###Autorisations
+
+Pour ne plus avoir l'erreur de type "Failed to write cache" :
+
+ 1. Installation du composant "acl"
+ 2. Configuration des droits
+
+```sh
+$ sudo apt-get install acl
+$ cd /var/www/html/Killer
+$ sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
+$ sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
+
+```
+
 ## Configurer Ip pour nom de domaine <a id="configure_ip_nom_domaine"></a>
 
 ###  /etc/bind/named.conf.local
@@ -197,8 +212,8 @@ Editer le fichier /etc/apache2/apache2.conf et y insérer à la fin :
     ServerName killer-game.com
     ServerAlias www.killer-game.com
 
-    DocumentRoot /var/www/html/Killer/web/app.php
-    <Directory /var/www/html/Killer/web/app.php>
+    DocumentRoot /var/www/html/Killer/web
+    <Directory /var/www/html/Killer/web>
         AllowOverride None
         Order Allow,Deny
         Allow from All
@@ -230,6 +245,13 @@ Editer le fichier /etc/apache2/apache2.conf et y insérer à la fin :
 </VirtualHost>
 
 ###### Ajout ######
+```
+
+Puis lancer la commande :
+```sh
+$ sudp a2enmod rewrite
+$ sudo service apache2 restart
+
 ```
 
 ## Fichier php.ini <a id="fichier_php.ini"></a>
@@ -269,4 +291,5 @@ En environnement de production, vous voulez que l'autoloader soit rapide. Compos
 $ cd /var/www/html/Killer
 $ composer dump-autoload --optimize
 ```
+
 
