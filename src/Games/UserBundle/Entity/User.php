@@ -1,5 +1,5 @@
 <?php
-// src/OC/UserBundle/Entity/User.php
+// src/Games/UserBundle/Entity/User.php
 
 namespace Games\UserBundle\Entity;
 

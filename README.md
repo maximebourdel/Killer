@@ -1,170 +1,272 @@
-Symfony Standard Edition
-========================
+# Mode opératoire de configuration de serveur
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony2
-application that you can use as the skeleton for your new applications.
+Ce mode opératoire permettra à n'importe quel utilisateur de reconfigurer un serveur afin de permettre un hébergement de sites internet et ce, avec les sécurités qui vont avec.
 
-This document contains information on how to download, install, and start
-using Symfony. For a more detailed explanation, see the [Installation][1]
-chapter of the Symfony Documentation.
+#### Version
+1.0
 
-1) Installing the Standard Edition
-----------------------------------
+## Table des matières
+  * [Outils de base](#outils_de_base)
+  * [Symfony 2](#symfony_2)
+  * [Composer](#composer)
+  * [Installer le site web](#installer_le_site_web)
+  * [Configurer Ip pour nom de domaine](#configure_ip_nom_domaine)
+  * [Fichier .conf](#fichier_.conf)
+  * [Fichier php.ini](#fichier_php.ini)
+  * [Vérifications](#verifications)
 
-When it comes to installing the Symfony Standard Edition, you have the
-following options.
 
-### Use Composer (*recommended*)
+## Outils de base <a id="outils_de_base"></a>
 
-As Symfony uses [Composer][2] to manage its dependencies, the recommended way
-to create a new project is to use it.
+### Pensez à faire des updates
+```sh
+$ sudo apt-get update
+```
 
-If you don't have Composer yet, download it following the instructions on
-http://getcomposer.org/ or just run the following command:
+### GIT
+```sh
+$ sudo apt-get install git
+```
 
-    curl -s http://getcomposer.org/installer | php
+### Apache 
+```sh
+$ sudo apt-get install apache2
+```
 
-Then, use the `create-project` command to generate a new Symfony application:
+### PHP
+```sh
+$ sudo apt-get install php5 php5-cli libapache2-mod-php5 php5-mcrypt
+```
 
-    php composer.phar create-project symfony/framework-standard-edition path/to/install
+### MySQL
+```sh
+$ sudo apt-get install mysql-server libapache2-mod-auth-mysql php5-mysql
+```
 
-Composer will install Symfony and all its dependencies under the
-`path/to/install` directory.
+A présent, le serveur est prêt à accueillir les sites webs sur le répertoire :
+```sh
+$ /var/www/html
+```
 
-### Download an Archive File
+## Symfony 2 <a id="symfony_2"></a>
+Initialisation des variable globales
+```sh
+$ sudo curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony
+$ sudo chmod a+x /usr/local/bin/symfony
+```
+## Composer <a id="composer"></a>
+```sh
+$ sudo curl -sS https://getcomposer.org/installer | php
+$ sudo mv composer.phar /usr/local/bin/composer
+```
 
-To quickly test Symfony, you can also download an [archive][3] of the Standard
-Edition and unpack it somewhere under your web server root directory.
+## Installer le site web <a id="installer_le_site_web"></a>
 
-If you downloaded an archive "without vendors", you also need to install all
-the necessary dependencies. Download composer (see above) and run the
-following command:
+### Import du code source
+Se positionner dans le répertoire web  :
+```sh
+$ cd /var/www/html
+```
 
-    php composer.phar install
+Lancer la commande :
+```sh
+$ sudo git clone https://github.com/maximebourdel/Killer.git
+```
+Un répertoire "Killer" est maintenant présent, c'est le code source.
 
-2) Checking your System Configuration
--------------------------------------
+### Installation de la base de données et des tables
 
-Before starting coding, make sure that your local system is properly
-configured for Symfony.
+```sh
+$ php bin/console doctrine:database:create
+$ php app/console doctrine:schema:update --force
+```
 
-Execute the `check.php` script from the command line:
+### Installation des librairies
 
-    php app/check.php
+Se positionner dans le projet 
+```sh
+$ cd Killer
+$ sudo composer update
+```
+Les composants du projet vont maintenant s'installer (peut prendre du temps).
+Les assets (raccourcis) seront eux aussi générés.
 
-The script returns a status code of `0` if all mandatory requirements are met,
-`1` otherwise.
+Il faut ensuite renseigner les éléments essentiels pour la connexion puis le site sera opérationnel !
 
-Access the `config.php` script from a browser:
+## Configurer Ip pour nom de domaine <a id="configure_ip_nom_domaine"></a>
 
-    http://localhost/path-to-project/web/config.php
+###  /etc/bind/named.conf.local
+Ajouter les lignes suivantes à la fin du fichier /etc/bind/named.conf.local
+```sh
+zone "killer-game.com" {
+  type master;
+  file "/etc/bind/zones/db.killer-game.com";
+  allow-transfer {5.39.77.232;};
+  allow-query{any;};
+  notify yes;
+};
 
-If you get any warnings or recommendations, fix them before moving on.
+zone "232.77.39.5.in-addr.arpa" {
+  type master;
+  file "/etc/bind/zones/232.77.39.5.in-addr.arpa";
+};
+```
 
-3) Browsing the Demo Application
---------------------------------
+Vérification que tout fonctionne (il ne devrait rien y avoir d'affiché) :
+```sh
+$ named-checkconf /etc/bind/named.conf
+```
 
-Congratulations! You're now ready to use Symfony.
+Ajouter le dossier zones puis se positionner dedans :
+```sh
+$ mkdir /etc/bind/zones
+$ cd /etc/bind/zones
+```
+puis créez les fichiers suivants :
 
-From the `config.php` page, click the "Bypass configuration and go to the
-Welcome page" link to load up your first Symfony page.
+### /etc/bind/zones/db.killer-game.com
+Créer le fichier /etc/bind/zones/db.killer-game.com et y insérer :
+```sh
+$TTL 12H
+$ORIGIN killer-game.com.
+@          IN              SOA             ns.kimsufi.com. ownercheck.killer-game.com. (
+           2016041702      ; Serial
+           8H              ; Refresh
+           30M             ; Retry
+           4W              ; Expire
+           8H              ; Minimum TTL
+)
+           IN              NS              ns324635.ip-5-39-77.eu.
+           IN              NS              ns.kimsufi.com.
+killer-game.com.           IN              A               5.39.77.232
+ns         IN              CNAME           killer-game.com.
+mail       IN              CNAME           killer-game.com.
+www        IN              CNAME           killer-game.com.
+ftp        IN              CNAME           killer-game.com.
+ownercheck IN              TXT             "xxxxxx"
+```
 
-You can also use a web-based configurator by clicking on the "Configure your
-Symfony Application online" link of the `config.php` page.
+Vérification : 
+```sh
+$ named-checkzone killer-game.com db.killer-game.com 
+zone killer-game.com/IN: loaded serial 2016041702
+OK
+```
 
-To see a real-live Symfony page in action, access the following page:
 
-    web/app_dev.php/demo/hello/Fabien
+### /etc/bind/zones/232.77.39.5.in-addr.arpa
+Créer le fichier /etc/bind/zones/232.77.39.5.in-addr.arpa et y insérer :
+```sh
+$TTL 12H
+@          IN              SOA             killer-game.com. postmaster.killer-game.com. (
+           2016041702      ; Serial
+           8H              ; Refresh
+           30M             ; Retry
+           4W              ; Expire
+           8H              ; Minimum TTL
+)
+           IN NS   ns.kimsufi.com.
+           IN PTR  killer-game.com.
+```
+Vérification : 
+```sh
+$ named-checkzone killer-game.com 232.77.39.5.in-addr.arpa 
+zone killer-game.com/IN: loaded serial 2016041702
+OK
+```
 
-4) Getting started with Symfony
--------------------------------
 
-This distribution is meant to be the starting point for your Symfony
-applications, but it also contains some sample code that you can learn from
-and play with.
+```sh
+$ nslookup killer-game.com
+Server:  127.0.0.1
+Address: 127.0.0.1#53
 
-A great way to start learning Symfony is via the [Quick Tour][4], which will
-take you through all the basic features of Symfony2.
+Name: killer-game.com
+Address: 5.39.77.232
+```
 
-Once you're feeling good, you can move onto reading the official
-[Symfony2 book][5].
 
-A default bundle, `AcmeDemoBundle`, shows you Symfony2 in action. After
-playing with it, you can remove it by following these steps:
+## Fichier .conf  <a id="fichier_.conf"></a>
+### /etc/apache2/apache2.conf
+Editer le fichier /etc/apache2/apache2.conf et y insérer à la fin :
 
-  * delete the `src/Acme` directory;
+```sh
+###### Ajout ######
 
-  * remove the routing entry referencing AcmeDemoBundle in `app/config/routing_dev.yml`;
+<VirtualHost *:80>
+    ServerName killer-game.com
+    ServerAlias www.killer-game.com
 
-  * remove the AcmeDemoBundle from the registered bundles in `app/AppKernel.php`;
+    DocumentRoot /var/www/html/Killer/web/app.php
+    <Directory /var/www/html/Killer/web/app.php>
+        AllowOverride None
+        Order Allow,Deny
+        Allow from All
 
-  * remove the `web/bundles/acmedemo` directory;
+        <IfModule mod_rewrite.c>
+            Options -MultiViews
+            RewriteEngine On
+            RewriteCond %{REQUEST_FILENAME} !-f
+            RewriteRule ^(.*)$ app.php [QSA,L]
+        </IfModule>
+    </Directory>
 
-  * empty the `security.yml` file or tweak the security configuration to fit
-    your needs.
+    # uncomment the following lines if you install assets as symlinks
+    # or run into problems when compiling LESS/Sass/CoffeScript assets
+    # <Directory /var/www/Killer>
+    #     Options FollowSymlinks
+    # </Directory>
 
-What's inside?
----------------
+    # optionally disable the RewriteEngine for the asset directories
+    # which will allow apache to simply reply with a 404 when files are
+    # not found instead of passing the request into the full symfony stack
+    <Directory /var/www/Killer/web/bundles>
+        <IfModule mod_rewrite.c>
+            RewriteEngine Off
+        </IfModule>
+    </Directory>
+    ErrorLog /var/log/apache2/project_error.log
+    CustomLog /var/log/apache2/project_access.log combined
+</VirtualHost>
 
-The Symfony Standard Edition is configured with the following defaults:
+###### Ajout ######
+```
 
-  * Twig is the only configured template engine;
+## Fichier php.ini <a id="fichier_php.ini"></a>
 
-  * Doctrine ORM/DBAL is configured;
+Editer le fichier /etc/php5/cli/php.ini :
+```sh
+$ sudo editor /etc/php5/cli/php.ini
+```
+### Initialiser la date systeme du serveur 
 
-  * Swiftmailer is configured;
+Puis faites en sorte de retirer le ";" au début de la ligne et ajouter "Europe/Paris"
+La ligne devrait ressembler à ceci
+```sh
+[Date]
+; Defines the default timezone used by the date functions
+; http://php.net/date.timezone
+date.timezone = "Europe/Paris"
+```
 
-  * Annotations for everything are enabled.
 
-It comes pre-configured with the following bundles:
+##Vérifications <a id="verifications"></a>
 
-  * **FrameworkBundle** - The core Symfony framework bundle
+Afin de s'assurer qu'il n'y a aucun soucis sur le serveur :
+```sh
+$ cd /var/www/html/Killer
+$ php app/check.php
+```
+Tout devrait être OK.
 
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
+##Optimisation
 
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
+### Côté Symfony2
+Par défaut, composer génère un autoloader qui n'est pas entièrement optimisé. En effet, lorsque vous avez de nombreuses classes, la génération de l'autoloader peut prendre un temps considérable..
 
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
+En environnement de production, vous voulez que l'autoloader soit rapide. Composer peut générer un autoloader optimisé qui convertit les arborescences / espace de nom normalisés via PSR-0 en un fichier classmap, améliorant les performances
+```sh
+$ cd /var/www/html/Killer
+$ composer dump-autoload --optimize
+```
 
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
-
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
-
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
-
-  * [**AsseticBundle**][12] - Adds support for Assetic, an asset processing
-    library
-
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
-
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
-
-  * [**SensioGeneratorBundle**][13] (in dev/test env) - Adds code generation
-    capabilities
-
-  * **AcmeDemoBundle** (in dev/test env) - A demo bundle with some example
-    code
-
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
-
-Enjoy!
-
-[1]:  http://symfony.com/doc/2.5/book/installation.html
-[2]:  http://getcomposer.org/
-[3]:  http://symfony.com/download
-[4]:  http://symfony.com/doc/2.5/quick_tour/the_big_picture.html
-[5]:  http://symfony.com/doc/2.5/index.html
-[6]:  http://symfony.com/doc/2.5/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  http://symfony.com/doc/2.5/book/doctrine.html
-[8]:  http://symfony.com/doc/2.5/book/templating.html
-[9]:  http://symfony.com/doc/2.5/book/security.html
-[10]: http://symfony.com/doc/2.5/cookbook/email.html
-[11]: http://symfony.com/doc/2.5/cookbook/logging/monolog.html
-[12]: http://symfony.com/doc/2.5/cookbook/assetic/asset_management.html
-[13]: http://symfony.com/doc/2.5/bundles/SensioGeneratorBundle/index.html
