@@ -4,4 +4,7 @@
  * initialisées dans le :layout
  * après un lap de temps
 */
+
+
 $('.alert').delay(3000).fadeOut('slow');
+

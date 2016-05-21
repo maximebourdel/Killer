@@ -12,12 +12,14 @@
 		<link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
 		
 		
-		{% javascripts
-   		   '@GamesKillerBundle/Resources/public/js/main.js'
-	    %}
+		
+		{% javascripts '@GamesKillerBundle/Resources/public/js/main.js' %}
 		  <script src="{{ asset_url }}"></script>
 	    {% endjavascripts %}
     
+        {% javascripts'@GamesKillerBundle/Resources/public/images/favicon.ico'%}
+		   <link rel="shortcut icon" href="{{ asset_url }}" />
+	    {% endjavascripts %}
 		
 		<title>{% block title %}Killer{% endblock %}</title>
 		

@@ -102,10 +102,11 @@ Pour ne plus avoir l'erreur de type "Failed to write cache" :
 
 ```sh
 $ sudo apt-get install acl
+$ su root
 $ cd /var/www/html/Killer
 $ sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
 $ sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
-
+$ exit
 ```
 
 ## Configurer Ip pour nom de domaine <a id="configure_ip_nom_domaine"></a>
