@@ -14,6 +14,8 @@ Ce mode opératoire permettra à n'importe quel utilisateur de reconfigurer un s
   * [Fichier .conf](#fichier_.conf)
   * [Fichier php.ini](#fichier_php.ini)
   * [Vérifications](#verifications)
+  * [Installation autre composantes](#installation_autre_composantes)
+  * [Optimisations](#optimisations)
 
 
 ## Outils de base <a id="outils_de_base"></a>
@@ -35,7 +37,7 @@ $ sudo apt-get install apache2
 
 ### PHP
 ```sh
-$ sudo apt-get install php5 php5-cli libapache2-mod-php5 php5-mcrypt
+$ sudo apt-get install php5 php5-cli libapache2-mod-php5 php5-mcrypt php5-curl
 ```
 
 ### MySQL
@@ -282,7 +284,46 @@ $ php app/check.php
 ```
 Tout devrait être OK.
 
-##Optimisation
+##Installation autre composantes <a id="installation_autre_composantes"></a>
+
+
+###Elastic Search
+S'assurer que le package suivant est déjà présent :
+```sh
+$ sudo apt-get install php5-curl
+``` 
+Ensuite, récupérer la version elasticsearch-1.4.0 
+Puis se situer dans le répertoire :
+```sh
+$ cd elasticsearch-1.4.0/bin
+``` 
+Puis lancer la elastic search en tache de fond de la sorte :
+```sh
+$ sudo ./elasticsearch &
+``` 
+(le PID sera alors affiché, si vous souhaitez le tuer faire ) :
+```sh
+$ sudo kill -9 <PID>
+``` 
+Redémarrer Apache2 :
+```sh
+$ sudo service apache2 restart
+``` 
+
+Aller dans le répertoire du Killer :
+```sh
+$ cd/var/www/html/Killer 
+```
+
+Charger les données pour Elastica :
+```sh
+$ sudo php app/console fos:elastica:populate
+```
+
+###Vérification
+Créer un Killer, il devrait se créer sans renvoyer d'erreur.
+
+##Optimisations <a id="optimisations"></a>
 
 ### Côté Symfony2
 Par défaut, composer génère un autoloader qui n'est pas entièrement optimisé. En effet, lorsque vous avez de nombreuses classes, la génération de l'autoloader peut prendre un temps considérable..
@@ -292,5 +333,6 @@ En environnement de production, vous voulez que l'autoloader soit rapide. Compos
 $ cd /var/www/html/Killer
 $ composer dump-autoload --optimize
 ```
+
 
 
