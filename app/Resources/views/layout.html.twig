@@ -10,16 +10,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		
 		<link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
-		
-		
-		
-		{% javascripts '@GamesKillerBundle/Resources/public/js/main.js' %}
-		  <script src="{{ asset_url }}"></script>
-	    {% endjavascripts %}
-    
-        {% javascripts'@GamesKillerBundle/Resources/public/images/favicon.ico'%}
-		   <link rel="shortcut icon" href="{{ asset_url }}" />
-	    {% endjavascripts %}
+		    
 		
 		<title>{% block title %}Killer{% endblock %}</title>
 		
@@ -46,10 +37,10 @@
                         <li id="consultListCreatedKiller"><a href="{{ path('games_killer_consultCreatedListKillers') }}">Voir mes Killers</a></li>
                         <li id="consultListParticipationKiller"><a href="{{ path('games_killer_consultParticipationListKillers') }}">Voir mes Participations</a></li>
 	            	    <li id="createKiller"><a href="{{ path('games_killer_createKiller') }}">Créer un nouveau Killer</a></li>
-	            	    <li id="login"><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+	            	    <li id="logout"><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
 	            	{% else %}
                         <li id="login"><a href="{{ path('login') }}">Connexion</a></li>
-                        <li id="register"><a href="{{ path('games_user_create') }}">Nouveau?</a></li>
+                        <li id="register"><a href="{{ path('games_user_create') }}">Nouveau ?</a></li>
                     {% endif %}
                     
 	          	</ul>
@@ -63,13 +54,12 @@
             <div class="alert alert-{{ type }} fade in alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert">
                     <span aria-hidden="true">&times;</span>
-                    <span class="sr-only">Close</span>
+                    <span class="sr-only">Fermer</span>
                 </button>
                 <p>{{ flash }}</p>
             </div>
         {% endfor %}
     {% endfor %}
-        
        
     
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -78,9 +68,19 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     {#% penser à lancer la commande app/console mopa:bootstrap:symlink:less %#}
     	
+    	
+	{% javascripts
+   	    '@GamesKillerBundle/Resources/public/js/main.js'
+	%}
+        <script src="{{ asset_url }}"></script>
+	{% endjavascripts %}    	
+    	
+    	
     {% block body %}{% endblock %}
 
     {% block script %}{% endblock %}    
+    
+    
     
     <div class="container">
         <br />

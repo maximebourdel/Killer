@@ -36,8 +36,9 @@
 				<br />
 				<div class="col-sm-12">
 					<button class="btn btn btn-primary" type="submit">Connexion</button>
+					<br />
 				</div>
-				<br /> <br />
+				<br /> <br /> <br />
 			</form>
 		</div>
 		<br />
@@ -54,3 +55,7 @@
 	</div>
 </div>
 {% endblock %}
+
+{% block script %}
+    <script> $('#login').addClass('active');</script>
+{% endblock script %}
