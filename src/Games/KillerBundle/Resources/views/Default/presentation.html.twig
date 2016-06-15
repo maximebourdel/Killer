@@ -1,0 +1,80 @@
+{# On étend notre layout #}
+{% extends "::layout.html.twig" %}
+
+
+
+{# Dans notre layout, il faut définir le block body #}
+{% block body %}
+
+<div class="container">
+    <h1>Règles du jeu du Killer</h1>
+    <div class="well col-sm-12">
+        <h2>Le Killer c'est quoi ?</h2>
+        C'est avant tout <b>un jeu !</b> Un jeu principalement joué par les étudiants, mais aussi utilisé dans les entreprises. 
+        Chaque participant au Killer se voit assigné un contrat. Ce contrat vise à "tuer" la personne concernée.
+        Pour "tuer" sa victime, il suffit de toucher tout simplement la victime avec un objet qui lui sera assigné.
+        
+        <br />
+        <br />
+        
+        Une fois la victime tuée, il suffit de lui demander le numéro de contrat qui lui a été donné lors de sa participation au Killer. 
+        Il suffit ensuite de rentrer ce numéro de contrat sur le site pour connaître sa nouvelle victime !
+        
+        <br />
+        <br />
+        
+        N'oubliez pas que chaque participant doit tuer une personne, quelqu'un a donc un contrat sur vous ; alors restez sur vos gardes ! 
+        
+        <h2>Quel est le but du Killer ?</h2>
+        Améliorer la cohésion sociale et apprendre à se connaître. Le but n'est pas bien sûr de tuer les gens en vrai !
+        
+        <h2>Comment je joue ?</h2>
+        
+        Il faut avant tout se créer un compte : 
+        <a href="{{ path('games_user_create') }}"> 
+    		<span class="glyphicon glyphicon-chevron-right"></span> 
+    	   Par ici !
+    	</a>
+        <h3>Je suis un admin, je veux créer une nouvelle partie de Killer</h3>
+        Si vous créez une nouvelle partie, vous serez administrateur du jeu du Killer que vous créez, 
+        c'est vous qui aurez le droit de sélection sur les participants autorisés à jouer et à ne pas jouer !
+        Bref, pour créer un nouveau Killer : 
+        <a href="{{ path('games_killer_createKiller') }}"> 
+    		<span class="glyphicon glyphicon-chevron-right"></span> 
+    	   Par ici !
+    	</a>
+    	<br />
+        <br />
+    	Une fois votre Killer créé, vous n'aurez plus qu'à attendre que les participants s'inscrivent 
+    	puis vous pourrez sélectionner les personnes autorisées et non autorisées puis enfin, lancer la PARTIE !
+        <h3>Je suis un participant, je veux simplement jouer au Killer</h3>
+        C'est très simple, il suffit d'aller sur la page d'accueil et de participer à un Killer en sélectionnant 
+        une des parties créées par les admins.
+        Il n'y aura plus qu'à attendre que l'admin lance la PARTIE !
+        <a href="{{ path('games_killer_index') }}"> 
+    		<span class="glyphicon glyphicon-chevron-right"></span> 
+    	   Par ici !
+    	</a>
+        
+        <h3>Le jeu est lancé ! Je fais quoi ?</h3>
+        Regardez qui est votre cible et tuez-la avec l'objet qui vous est assigné ! 
+        Si vous la tuez, demandez-lui son code pour le rentrer et connaître votre prochaine victime.
+        Attention à ne pas vous faire tuer. Si c'est le cas, donnez le code à votre assassin.
+        
+        <br />
+        <br />
+        
+        Le dernier joueur en vie gagne la partie.
+        
+        <h4>Faites vos jeux et que le meilleur gagne !</h4>
+    </div>
+    
+</div>
+
+{% endblock %}
+
+{% block script %}
+
+<script> $('#presentation').addClass('active');</script>
+
+{% endblock %}

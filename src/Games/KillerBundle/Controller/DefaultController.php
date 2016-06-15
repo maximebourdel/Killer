@@ -40,6 +40,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DefaultController extends Controller
 {
+    /**
+     * Page d'index
+     * @param Request $request
+     */
     public function indexAction(Request $request)
     {
         $killers = $this->getDoctrine()
@@ -49,6 +53,15 @@ class DefaultController extends Controller
         return $this->render('GamesKillerBundle:Default:index.html.twig', array (
                 'killers' => $killers,
         ) );
+    }
+    
+    /**
+     * Page de présentation du jeu du Killer
+     * @param Request $request
+     */
+    public function presentationAction(Request $request)
+    {
+        return $this->render('GamesKillerBundle:Default:presentation.html.twig');
     }
     
     //cette méthode crée une partie de Killer

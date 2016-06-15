@@ -1,6 +1,10 @@
 games_killer_index:
     path:     /
     defaults: { _controller: GamesKillerBundle:Default:index }
+    
+games_killer_presentation:
+    path:     /presentation
+    defaults: { _controller: GamesKillerBundle:Default:presentation }
 
 games_killer_createKiller:
     path:     /newKiller
