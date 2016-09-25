@@ -5,12 +5,12 @@ namespace Games\KillerBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Object
+ * Weapon
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Games\KillerBundle\Entity\ObjectRepository")
+ * @ORM\Entity(repositoryClass="Games\KillerBundle\Entity\WeaponRepository")
  */
-class Object
+class Weapon
 {
     /**
      * @var integer
@@ -36,7 +36,7 @@ class Object
     private $image;
     
     /**
-     * @ORM\OneToMany(targetEntity="Games\KillerBundle\Entity\Player", mappedBy="object")
+     * @ORM\OneToMany(targetEntity="Games\KillerBundle\Entity\Player", mappedBy="weapon")
      */
     private $players;
     
@@ -54,7 +54,7 @@ class Object
      * Set name
      *
      * @param string $name
-     * @return Object
+     * @return Weapon
      */
     public function setName($name)
     {

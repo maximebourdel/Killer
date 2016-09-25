@@ -22,6 +22,8 @@ class LoadKillerData extends AbstractFixture implements FixtureInterface, Ordere
             , array('4 players terminé (3 morts)', date_create("2016-03-29 01:50:42"), NULL, 'user0', 4, 'Camino Alto de Alfaraz de Sayago, 37116 Moraleja de Sayago, Zamora, Spain', 41.203456192051284, -6.021240055561066 )
         );
         
+        echo "Création des Killers \n";
+        
         foreach ($listKillers as $key => $values) {
             //création d'un nouveau Killer
             $killer = new Killer();
@@ -43,7 +45,7 @@ class LoadKillerData extends AbstractFixture implements FixtureInterface, Ordere
         }
       
         $manager->flush();
-        echo sizeof($listKillers). " killers ont été créés avec succès \n";
+        echo sizeof($listKillers). " Killers ont été créés avec succès \n";
     }
     
     public function getOrder() {

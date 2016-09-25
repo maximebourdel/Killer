@@ -23,6 +23,8 @@ class LoadUserData extends AbstractFixture implements FixtureInterface, OrderedF
             ,array('relou','relou','relou@hotmail.fr','Relou','Fake')
         );
         
+        echo "Création des Utilisateurs \n";
+        
         foreach ($listUsers as $key => $values) {
             //création d'un nouvel utilisateur
             $user = new User();
@@ -42,7 +44,7 @@ class LoadUserData extends AbstractFixture implements FixtureInterface, OrderedF
         }
       
         $manager->flush();
-        echo sizeof($listUsers). " utilisateurs ont été créés avec succès \n";
+        echo sizeof($listUsers). " Utilisateurs ont été créés avec succès \n";
     }
     
     public function getOrder() {

@@ -16,9 +16,8 @@ class Password
     public function generateNewPassword(){
         
         shuffle($this->array); // randomize the array
-        $array = array_slice($this->array, 0, 6); // get the first six (random) characters out
+        $listWords = array_slice($this->array, 0, 6); // get the first six (random) characters out
         
-        
-        return  implode('', $this->array); // smush them back into a string
+        return  implode('', $listWords); // smush them back into a string
     }
 }

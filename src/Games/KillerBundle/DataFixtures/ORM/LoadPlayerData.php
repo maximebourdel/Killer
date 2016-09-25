@@ -20,26 +20,28 @@ class LoadPlayerData extends AbstractFixture implements FixtureInterface, Ordere
             , array('user4', 'killer1', 0, NULL, NULL, 0, 0, NULL)//3
             , array('user7', 'killer1', 0, NULL, NULL, 0, 0, NULL)//4
 
-            , array('user2', 'killer2', 0, 'KQNSDJ', NULL, 0, 1, 'object2')//5
-            , array('user3', 'killer2', 0, 'LIQNET', NULL, 0, 1, 'object3')//6
-            , array('user4', 'killer2', 0, 'JMPOZR', NULL, 0, 1, 'object5')//7
-            , array('user5', 'killer2', 0, 'KPLGHF', NULL, 0, 1, 'object0')//8
+            , array('user2', 'killer2', 0, 'KQNSDJ', NULL, 0, 1, 'weapon2')//5
+            , array('user3', 'killer2', 0, 'LIQNET', NULL, 0, 1, 'weapon3')//6
+            , array('user4', 'killer2', 0, 'JMPOZR', NULL, 0, 1, 'weapon5')//7
+            , array('user5', 'killer2', 0, 'KPLGHF', NULL, 0, 1, 'weapon0')//8
                 
-            , array('user2', 'killer3', 1, 'KQNSDJ', NULL, 0, 1, 'object5')//9
-            , array('user3', 'killer3', 0, 'LIQNET', NULL, 0, 1, 'object3')//10
-            , array('user4', 'killer3', 0, 'JMPOZR', date_create("2016-03-26 23:48:42"), 1, 1, 'object5')//11
-            , array('user5', 'killer3', 0, 'KPLGHF', NULL, 0, 1, 'object0')//12
+            , array('user2', 'killer3', 1, 'KQNSDJ', NULL, 0, 1, 'weapon5')//9
+            , array('user3', 'killer3', 0, 'LIQNET', NULL, 0, 1, 'weapon3')//10
+            , array('user4', 'killer3', 0, 'JMPOZR', date_create("2016-03-26 23:48:42"), 1, 1, 'weapon5')//11
+            , array('user5', 'killer3', 0, 'KPLGHF', NULL, 0, 1, 'weapon0')//12
                 
-            , array('user2', 'killer4', 1, 'KQNSDJ', NULL, 0, 1, 'object5')//13
-            , array('user3', 'killer4', 1, 'LIQNET', NULL, 0, 1, 'object0')//14
-            , array('user4', 'killer4', 0, 'JMPOZR', date_create("2016-03-27 23:48:42"), 1, 1, 'object5')//15
-            , array('user5', 'killer4', 0, 'KPLGHF', date_create("2016-03-27 23:50:58"), 1, 1, 'object0')//16
+            , array('user2', 'killer4', 1, 'KQNSDJ', NULL, 0, 1, 'weapon5')//13
+            , array('user3', 'killer4', 1, 'LIQNET', NULL, 0, 1, 'weapon0')//14
+            , array('user4', 'killer4', 0, 'JMPOZR', date_create("2016-03-27 23:48:42"), 1, 1, 'weapon5')//15
+            , array('user5', 'killer4', 0, 'KPLGHF', date_create("2016-03-27 23:50:58"), 1, 1, 'weapon0')//16
             
-            , array('user2', 'killer5', 2, 'KQNSDJ', NULL, 0, 1, 'object5')//17
-            , array('user3', 'killer5', 1, 'LIQNET', date_create("2016-03-29 01:50:42"), 1, 1, 'object0')//18
-            , array('user4', 'killer5', 0, 'JMPOZR', date_create("2016-03-28 23:48:42"), 1, 1, 'object5')//19
-            , array('user5', 'killer5', 0, 'KPLGHF', date_create("2016-03-28 23:48:42"), 1, 1, 'object0')//20
+            , array('user2', 'killer5', 2, 'KQNSDJ', NULL, 0, 1, 'weapon5')//17
+            , array('user3', 'killer5', 1, 'LIQNET', date_create("2016-03-29 01:50:42"), 1, 1, 'weapon0')//18
+            , array('user4', 'killer5', 0, 'JMPOZR', date_create("2016-03-28 23:48:42"), 1, 1, 'weapon5')//19
+            , array('user5', 'killer5', 0, 'KPLGHF', date_create("2016-03-28 23:48:42"), 1, 1, 'weapon0')//20
         );
+        
+        echo "Création des Players \n";
         
         foreach ($listPlayers as $key => $values) {
             //création d'un nouveau Killer
@@ -54,8 +56,8 @@ class LoadPlayerData extends AbstractFixture implements FixtureInterface, Ordere
             $player->setIsDead($values[5]);
             $player->setIsAllowed($values[6]);
             //si la valeur n'est pas nulle, on va chercher la référence.
-            $values[7] == NULL ? $object=$values[7] : $object=$this->getReference($values[7]);
-            $player->setObject($object);
+            $values[7] == NULL ? $weapon=$values[7] : $weapon=$this->getReference($values[7]);
+            $player->setWeapon($weapon);
             
             //on persiste le Killer
             $manager->persist($player);
@@ -87,7 +89,7 @@ class LoadPlayerData extends AbstractFixture implements FixtureInterface, Ordere
         
         $manager->flush();
         
-        echo sizeof($listPlayers). " players ont été créés avec succès \n";
+        echo sizeof($listPlayers). " Players ont été créés avec succès \n";
     }
     
     public function getOrder() {

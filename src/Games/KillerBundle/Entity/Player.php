@@ -79,9 +79,9 @@ class Player
     private $player;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Games\KillerBundle\Entity\Object", inversedBy="players")
+     * @ORM\ManyToOne(targetEntity="Games\KillerBundle\Entity\Weapon", inversedBy="players")
      */
-    private $object;
+    private $weapon;
     
     
     public function __construct()
@@ -191,14 +191,14 @@ class Player
         return $this;
     }
 
-    public function getObject ()
+    public function getWeapon ()
     {
-        return $this->object;
+        return $this->weapon;
     }
 
-    public function setObject ($object)
+    public function setWeapon ($weapon)
     {
-        $this->object = $object;
+        $this->weapon = $weapon;
         return $this;
     }
 

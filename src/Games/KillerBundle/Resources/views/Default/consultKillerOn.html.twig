@@ -6,7 +6,7 @@
 {# Dans notre layout, il faut définir le block body #}
 {% block body %}
 <div class="container">
-    <h3>{{ killer.name }} est en cours!!</h3>
+    <h3>{{ killer.name }} {{ killer.dateEnd is null ? 'est en cours' : 'est terminé' }} !!</h3>
     
     <div class="well">
         {% include "GamesKillerBundle:Default/Tool:displayAKillerInformations.html.twig" %}
@@ -26,10 +26,18 @@
         	       {% else %}
             	       <span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span>
             	       <strong>{{ participant.user.firstName }} {{ participant.user.name }}</strong>
-            	       doit tuer <strong>{{ participant.playerToKill.user.firstName }} {{ participant.playerToKill.user.Name }}</strong> 
-            	       avec <strong>{{ participant.playerToKill.object.name }}</strong>.
-            	       Il a actuellement tué {{ participant.numKills }} personnes.
-                   {% endif %}
+            	       
+            	       {# Cas ou le participant a gagné #}
+        	           {% if participant.playerToKill is null %}
+            	   	    	est le grand <strong>vainqueur </strong> !
+            	       		Il a tué {{ participant.numKills }} personnes.
+                   	   {% else %}
+        	       			doit tuer <strong>{{ participant.playerToKill.user.firstName }} {{ participant.playerToKill.user.Name }}</strong> 
+            	    		avec <strong>{{ participant.playerToKill.weapon.name }}</strong>.
+            	       		Il a actuellement tué {{ participant.numKills }} personnes.
+        	           {% endif %}
+        	           
+        	       {% endif %}
         	    </div>	
       		{% endfor %}
     	</ul>

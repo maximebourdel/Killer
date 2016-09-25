@@ -6,31 +6,34 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Games\KillerBundle\Entity\Object;
+use Games\KillerBundle\Entity\Weapon;
 
-class Objects extends AbstractFixture implements FixtureInterface, OrderedFixtureInterface {
+class Weapons extends AbstractFixture implements FixtureInterface, OrderedFixtureInterface {
     
     public function load(ObjectManager $manager) {
         
-        $listObjets = array(
+        $listWeapons = array(
             'un aspirateur', 'une voiture', 'une télé'
             , 'une capote', 'un fer à repasser', 'bob l\'eponge'
             , 'un fer à lisser', 'une poêle', 'une brouette'
         );
     
-        foreach ($listObjets as $key => $name) {
+        
+        echo "Création des Weapons \n";
+        
+        foreach ($listWeapons as $key => $name) {
         	//On crée l'objet
-    	    $object = new Object();
-    	    $object->setName($name);
+    	    $weapon = new Weapon();
+    	    $weapon->setName($name);
     	    //on persiste l'objet
-    	    $manager->persist($object);
+    	    $manager->persist($weapon);
     	    //on crée la référence pour les autres dataLoaders
-    	    $this->addReference('object'.$key, $object);
-    	    echo "Référence object".$key." créé \n";
+    	    $this->addReference('weapon'.$key, $weapon);
+    	    echo "Référence weapon".$key." créé \n";
         }
         //On déclenche l'enregistrement
         $manager->flush();
-        echo sizeof($listObjets). " objets ont été créés avec succès \n";
+        echo sizeof($listWeapons). " Weapons ont été créés avec succès \n";
     }
   
     public function getOrder() {

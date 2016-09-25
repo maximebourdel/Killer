@@ -12,8 +12,8 @@ use Games\KillerBundle\ObjectsAttribution\ObjectsAttribution;
 use Games\KillerBundle\SearchKillerByAdress\SearchKillerByAdress;
 
 
-use Games\KillerBundle\Entity\Object;
-use Games\KillerBundle\Entity\ObjectRepository;
+use Games\KillerBundle\Entity\ds;
+use Games\KillerBundle\Entity\WeaponRepository;
 
 use Games\KillerBundle\Entity\Image;
 use Games\KillerBundle\Entity\ImageRepository;
@@ -365,8 +365,8 @@ class DefaultController extends Controller
         
        
         //on récupere les valeurs des objets
-        $objects = $this->getDoctrine()
-        ->getRepository('GamesKillerBundle:Object')
+        $weapons = $this->getDoctrine()
+        ->getRepository('GamesKillerBundle:Weapon')
         ->findAll();
         
         //on mélange les joueurs
@@ -394,13 +394,13 @@ class DefaultController extends Controller
             * Attribution des objets
             */
            //on sélectionne un objet au hasard
-           $randomIndex = rand(0, sizeOf($objects)-1);
+           $randomIndex = rand(0, sizeOf($weapons)-1);
            
            //on l'attribue au joueur
-           $allowedPlayer->setObject($objects[$randomIndex]);
+           $allowedPlayer->setWeapon($weapons[$randomIndex]);
            
            //on enleve l'objet de la liste pour qu'il ne soit utilisé qu'une fois
-           array_splice($objects, $randomIndex, 1);
+           array_splice($weapons, $randomIndex, 1);
            
            $em->persist($allowedPlayer);    
            
