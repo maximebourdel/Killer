@@ -158,23 +158,23 @@ class Player
         return $this;
     }
 
-    public function getIsDead ()
+    public function isDead ()
     {
         return $this->isDead;
     }
 
-    public function setIsDead ($isDead)
+    public function setDead ($isDead)
     {
         $this->isDead = $isDead;
         return $this;
     }
 
-    public function getIsAllowed ()
+    public function isAllowed ()
     {
         return $this->isAllowed;
     }
 
-    public function setIsAllowed ($isAllowed)
+    public function setAllowed ($isAllowed)
     {
         $this->isAllowed = $isAllowed;
         return $this;

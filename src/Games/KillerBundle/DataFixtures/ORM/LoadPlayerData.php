@@ -53,8 +53,8 @@ class LoadPlayerData extends AbstractFixture implements FixtureInterface, Ordere
             $player->setNumKills($values[2]);
             $player->setPassword($values[3]);
             $player->setDeathDate($values[4]);
-            $player->setIsDead($values[5]);
-            $player->setIsAllowed($values[6]);
+            $player->setDead($values[5]);
+            $player->setAllowed($values[6]);
             //si la valeur n'est pas nulle, on va chercher la référence.
             $values[7] == NULL ? $weapon=$values[7] : $weapon=$this->getReference($values[7]);
             $player->setWeapon($weapon);

@@ -146,7 +146,7 @@ class DefaultController extends Controller
                     'user' => $user,
                     'killer' => $killer
             ));
-        if ( $isPlayerExists != null ){ $newPlayer = null; }
+        if ( $isPlayerExists !== null ){ $newPlayer = null; }
 
        
         $participants = null;
@@ -235,7 +235,7 @@ class DefaultController extends Controller
                                     
                                     $em = $this->getDoctrine()->getManager();
                                     
-                                    $playerToKill->setIsDead(true);
+                                    $playerToKill->setDead(true);
                                     $playerToKill->setDeathDate(new \Datetime());
                                     
                                     
@@ -478,9 +478,9 @@ class DefaultController extends Controller
             ->find($id);
             
             if($participant->getIsAllowed() == true ){
-                $participant->setIsAllowed(false);
+                $participant->setAllowed(false);
             } else {
-                $participant->setIsAllowed(true);
+                $participant->setAllowed(true);
             }
             
             $em = $this->getDoctrine()->getManager();
