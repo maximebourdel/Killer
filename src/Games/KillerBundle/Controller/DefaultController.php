@@ -8,26 +8,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use Games\KillerBundle\Password\Password;
-use Games\KillerBundle\ObjectsAttribution\ObjectsAttribution;
-use Games\KillerBundle\SearchKillerByAdress\SearchKillerByAdress;
-
-
-use Games\KillerBundle\Entity\ds;
-use Games\KillerBundle\Entity\WeaponRepository;
-
-use Games\KillerBundle\Entity\Image;
-use Games\KillerBundle\Entity\ImageRepository;
 
 use Games\UserBundle\Entity\User;
-use Games\UserBundle\Form\UserType;
 
 use Games\KillerBundle\Entity\Killer;
-use Games\KillerBundle\Entity\KillerRepository;
+
 use Games\KillerBundle\Form\KillerType;
-use Games\KillerBundle\Entity\ElasticRepository\KillerElasticRepository;
 
 use Games\KillerBundle\Entity\Player;
-use Games\KillerBundle\Entity\PlayerRepository;
 use Games\KillerBundle\Form\PlayerType;
 use Games\KillerBundle\Form\PlayerEnablingType;
 use Games\KillerBundle\Form\PlayerEliminationType;
@@ -35,8 +23,6 @@ use Games\KillerBundle\Form\PlayerEliminationType;
 use Symfony\Component\HttpFoundation\Response;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DefaultController extends Controller
 {
@@ -342,9 +328,7 @@ class DefaultController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        
-        $user = $this->get('security.context')->getToken()->getUser(); 
-        
+                
         //on récupere les valeurs des joueurs
         $allowedPlayers = $this->getDoctrine()
         ->getRepository('GamesKillerBundle:Player')

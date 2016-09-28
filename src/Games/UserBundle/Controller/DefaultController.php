@@ -23,8 +23,6 @@ class DefaultController extends Controller
     
     public function createAction(Request $request)
     {
-        /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
-        $formFactory = $this->get('fos_user.registration.form.factory');
         /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
         $userManager = $this->get('fos_user.user_manager');
         /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
@@ -93,7 +91,7 @@ class DefaultController extends Controller
             $session->remove(SecurityContextInterface::AUTHENTICATION_ERROR);
            
             //Utilisateur non présent dans la BDD
-            if ($userManager->findUserByUsername($lastUsername) == null ) {
+            if ($userManager->findUserByUsername($lastUsername) === null ) {
                 $this->get('session')->getFlashBag()->add('warning', 'Mauvais login');
                 //Utilisateur présent, mauvais mot de passe
             } else {
@@ -107,11 +105,6 @@ class DefaultController extends Controller
         if (!$error instanceof AuthenticationException) {
             $error = null; // The value does not come from the security component.
         }
-    
-       
-        $csrfToken = $this->has('form.csrf_provider')
-        ? $this->get('form.csrf_provider')->generateCsrfToken('authenticate')
-        : null;
     
         if ( $request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
             

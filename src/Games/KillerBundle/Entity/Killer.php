@@ -3,7 +3,6 @@
 namespace Games\KillerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 use Games\UserBundle\Entity\User;
 
@@ -313,11 +312,11 @@ class Killer {
 	}
 	
 	public function addPlayer(\Games\KillerBundle\Entity\Player $player)	{
-	    $this->players[] = $players;
+	    $this->players[] = $player;
 	}
 	
 	public function removePlayer(\Games\KillerBundle\Entity\Player $player)	{
-	    $this->players->removeElement($players);
+	    $this->players->removeElement($player);
 	}
 	
 }

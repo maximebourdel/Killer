@@ -4,8 +4,6 @@ namespace Games\KillerBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
-use Games\KillerBundle\Entity\Killer;
-
 /**
  * PlayerRepository
  *

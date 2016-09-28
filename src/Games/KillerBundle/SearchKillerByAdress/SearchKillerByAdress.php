@@ -2,9 +2,6 @@
 
 namespace Games\KillerBundle\SearchKillerByAdress;
 
-
-use Games\KillerBundle\Entity\ElasticRepository\KillerElasticRepository;
-
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class SearchKillerByAdress
