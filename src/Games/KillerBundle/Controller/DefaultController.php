@@ -151,7 +151,7 @@ class DefaultController extends Controller
        
         $participants = null;
         //on est à l'étape ou le jeu n'est pas commencé (participation)
-        if($killer->getDateBegin() == null){ 
+        if($killer->getDateBegin() === null){ 
             
             //on n'affiche pas le formulaire de gestion si l'utilisateur n'est le createur du Killer
             if($killer->getUserAdmin()->getId() == $user->getId()){
@@ -220,9 +220,9 @@ class DefaultController extends Controller
                 );
                                 
                 //si le joueur est inscrit
-                if ($player != null) {
+                if ($player !== null) {
                     //le joueur a été accepté
-                    if ( $player->getIsAllowed() == true ){
+                    if ( $player->isAllowed() === true ){
                         
                             $playerEliminationForm = $this->get('form.factory')->create(new PlayerEliminationType, new Player());
                             
@@ -266,7 +266,7 @@ class DefaultController extends Controller
                         
                         $playerEliminationForm = $playerEliminationForm->createView();
                         
-                        if ($player->getPlayerToKill() == null ){$playerEliminationForm == null;}
+                        if ($player->getPlayerToKill() === null ){$playerEliminationForm == null;}
                         
                         return $this->render ( 'GamesKillerBundle:Default:consultKillerOnPlayer.html.twig', array (
                                 'killer' => $killer,
@@ -477,7 +477,7 @@ class DefaultController extends Controller
             ->getRepository('GamesKillerBundle:Player')
             ->find($id);
             
-            if($participant->getIsAllowed() == true ){
+            if($participant->isAllowed() === true ){
                 $participant->setAllowed(false);
             } else {
                 $participant->setAllowed(true);
