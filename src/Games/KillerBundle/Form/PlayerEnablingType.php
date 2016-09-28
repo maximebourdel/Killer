@@ -39,5 +39,4 @@ class PlayerEnablingType extends AbstractType
     return 'games_killerbundle_enablingPlayer'.$this->suffix;
   }
   
-  
 }

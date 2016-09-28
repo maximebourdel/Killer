@@ -115,4 +115,13 @@ class User extends BaseUser
   }
 
   
+  /**
+   * Get list of players
+   *
+   * @return List Killer
+   */
+  public function getPlayers(){
+      return $this->players;
+  }
+  
 }

@@ -22,8 +22,6 @@ use Games\KillerBundle\Form\PlayerEliminationType;
 
 use Symfony\Component\HttpFoundation\Response;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-
 class DefaultController extends Controller
 {
     /**

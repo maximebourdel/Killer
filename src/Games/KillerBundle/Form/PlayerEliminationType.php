@@ -35,5 +35,4 @@ class PlayerEliminationType extends AbstractType
     return 'games_killerbundle_eliminationPlayer';
   }
   
-  
 }

@@ -211,9 +211,4 @@ class Player
         $this->player = $player;
         return $this;
     }
- 
- 
-    
-    
-    
 }
