@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
-use Games\UserBundle\Form\UserType;
+use Games\UserBundle\Form\Type\UserType;
 use Games\UserBundle\Entity\User;
 
 class DefaultController extends Controller

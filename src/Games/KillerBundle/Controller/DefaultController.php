@@ -11,12 +11,12 @@ use Games\KillerBundle\Password\Password;
 
 use Games\KillerBundle\Entity\Killer;
 
-use Games\KillerBundle\Form\KillerType;
+use Games\KillerBundle\Form\Type\KillerType;
 
 use Games\KillerBundle\Entity\Player;
-use Games\KillerBundle\Form\PlayerType;
-use Games\KillerBundle\Form\PlayerEnablingType;
-use Games\KillerBundle\Form\PlayerEliminationType;
+use Games\KillerBundle\Form\Type\PlayerType;
+use Games\KillerBundle\Form\Type\PlayerEnablingType;
+use Games\KillerBundle\Form\Type\PlayerEliminationType;
 
 use Symfony\Component\HttpFoundation\Response;
 
