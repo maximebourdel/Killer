@@ -9,8 +9,6 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use Games\KillerBundle\Password\Password;
 
-use Games\UserBundle\Entity\User;
-
 use Games\KillerBundle\Entity\Killer;
 
 use Games\KillerBundle\Form\KillerType;
