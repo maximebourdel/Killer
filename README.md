@@ -75,21 +75,20 @@ $ sudo git clone https://github.com/maximebourdel/Killer.git
 ```
 Un répertoire "Killer" est maintenant présent, c'est le code source.
 
-### Installation des librairies
-
-Se positionner dans le projet 
-```sh
-$ cd Killer
-$ sudo composer update
-```
-
 ### Installation de la base de données et des tables
 
 ```sh
+$ cd Killer
 $ php bin/console doctrine:database:create
 $ php app/console doctrine:schema:update --force
 ```
 
+### Installation des librairies
+
+Se positionner dans le projet 
+```sh
+$ sudo composer update
+```
 
 Les composants du projet vont maintenant s'installer (peut prendre du temps).
 Les assets (raccourcis) seront eux aussi générés.
