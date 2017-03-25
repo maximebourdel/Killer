@@ -42,7 +42,7 @@ $ sudo apt-get install php php-xml
 
 ### MySQL
 ```sh
-$ sudo apt-get install mysql-server libapache2-mod-auth-mysql php5-mysql
+$ sudo apt-get install mysql-server php-mysql 
 ```
 
 A présent, le serveur est prêt à accueillir les sites webs sur le répertoire :
