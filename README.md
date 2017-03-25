@@ -58,8 +58,7 @@ $ sudo chmod a+x /usr/local/bin/symfony
 ```
 ## Composer <a id="composer"></a>
 ```sh
-$ sudo curl -sS https://getcomposer.org/installer | php
-$ sudo mv composer.phar /usr/local/bin/composer
+$ sudo apt-get install composer
 ```
 
 ## Installer le site web <a id="installer_le_site_web"></a>
