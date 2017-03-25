@@ -37,7 +37,7 @@ $ sudo apt-get install apache2
 
 ### PHP
 ```sh
-$ sudo apt-get install php
+$ sudo apt-get install php php-xml
 ```
 
 ### MySQL
@@ -75,13 +75,6 @@ $ sudo git clone https://github.com/maximebourdel/Killer.git
 ```
 Un répertoire "Killer" est maintenant présent, c'est le code source.
 
-### Installation de la base de données et des tables
-
-```sh
-$ php bin/console doctrine:database:create
-$ php app/console doctrine:schema:update --force
-```
-
 ### Installation des librairies
 
 Se positionner dans le projet 
@@ -89,6 +82,15 @@ Se positionner dans le projet
 $ cd Killer
 $ sudo composer update
 ```
+
+### Installation de la base de données et des tables
+
+```sh
+$ php bin/console doctrine:database:create
+$ php app/console doctrine:schema:update --force
+```
+
+
 Les composants du projet vont maintenant s'installer (peut prendre du temps).
 Les assets (raccourcis) seront eux aussi générés.
 
