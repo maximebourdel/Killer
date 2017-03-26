@@ -79,7 +79,7 @@ Un répertoire "Killer" est maintenant présent, c'est le code source.
 
 ```sh
 $ cd Killer
-$ php bin/console doctrine:database:create
+$ php app/console doctrine:database:create
 $ php app/console doctrine:schema:update --force
 ```
 
@@ -252,7 +252,7 @@ Editer le fichier /etc/apache2/apache2.conf et y insérer à la fin :
 
 Puis lancer la commande :
 ```sh
-$ sudp a2enmod rewrite
+$ sudo a2enmod rewrite
 $ sudo service apache2 restart
 
 ```
