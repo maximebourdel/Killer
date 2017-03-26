@@ -75,41 +75,7 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: Games\UserBundle\Entity\User
+    from_email:
+        address: test@example.com
+        sender_name: You
 
-
-fos_elastica:
-    clients:
-        default: { host: 127.0.0.1, port: 9200 }
-    indexes:
-        killer:
-            client: default
-            settings:
-                index:
-                    analysis:
-                        analyzer:
-                            custom_search_analyzer:
-                                type: custom
-                                tokenizer: standard
-                                filter   : [standard, asciifolding]
-                            custom_index_analyzer:
-                                type: custom
-                                tokenizer: standard
-                                filter   : [standard, asciifolding, custom_filter]
-                        filter:
-                            custom_filter:
-                                type: edge_ngram
-                                side: front
-                                min_gram: 2
-                                max_gram: 99
-                                
-            types:
-                killer:
-                    mappings: 
-                        name : { search_analyzer: custom_search_analyzer, index_analyzer: custom_index_analyzer, type: string }
-                    persistence:
-                        driver: orm
-                        model:  Games\KillerBundle\Entity\Killer
-                        provider: ~
-                        finder: ~
-                        listener: ~
-                        repository: Games\KillerBundle\Entity\ElasticRepository\KillerElasticRepository

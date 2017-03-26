@@ -19,7 +19,6 @@ class AppKernel extends Kernel
             new Games\KillerBundle\GamesKillerBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Games\UserBundle\GamesUserBundle(),
-            new FOS\ElasticaBundle\FOSElasticaBundle(),
             new \JMS\SerializerBundle\JMSSerializerBundle(),
             
             new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
