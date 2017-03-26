@@ -405,42 +405,6 @@ class DefaultController extends Controller
         return $this->redirect($this->generateUrl('games_killer_consultKiller', array('name' => $killer->getName())));
         
     }
-    
-    public function ajaxrqSearchKillerAction() {
-
-        //Déclarer un tableau de type Array
-        $list_killers = array();
-
-        $request = $this->container->get('request');
-
-        if ($this->container->get('request')->isXmlHttpRequest()) {
-            
-            //Récuperer le choix que vous fait dans la liste déroulante "Pays : "
-            $adresse = $request->request->get('adresse');
-            //Faire la requête pour récurer la liste des ville du pays sélectionné, grâce à leur "id" (fr, ma, es..), insérer ce résultat dans $villes  
-            
-            
-            // call elastic manager
-            $elasticManager = $this->container->get('fos_elastica.manager.orm');
-            // retrieve results
-            $killers = $elasticManager->getRepository('GamesKillerBundle:Killer')->findAdress($adresse);
-            
-            //Remplir la liste déroulante avec le résultat 
-            foreach ($killers as $k) {
-                $list_killers[] = $k->getName();
-            }
-        
-        } 
-
-        //Instancier une "réponse" grâce à l'objet "Response"
-        $response = new Response(json_encode($list_killers));
-
-       //Lui indiquer le type de format dans le quelle est envoyé la reponse
-        $response->headers->set('Content-Type', 'application/json');
-
-       //Retourner la tout à notre liste déroulante
-        return $response;
-    }
    
     public function ajaxrqValidatePlayerAction() {
         

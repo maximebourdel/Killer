@@ -9,28 +9,14 @@
 <div class="container">
     <h3>Bienvenue à toi jeune fou, mais où veux tu donc tuer à souhaits ?</h3>
     
-    <div class="well col-sm-7">
+    <div class="well col-sm-12">
         Rechercher sur la carte
         <br />
         <div id="map-canvas" style="height:400px;" ></div>
         
     </div>
     
-     <div class="well col-sm-4 col-sm-offset-1">
-        Ou sur le moteur de recherche
-        <br />
-       
-            <input type="text" id="searchKiller" size="20"  />
-             
-        <div class="col-sm-12">
-            <br />
-            <table id="select">
-                <tbody>
 
-                </tbody>
-            </table>
-        </div>
-    </div>
    
 </div>
 
@@ -101,45 +87,6 @@
        
     
     <script> $('#index').addClass('active');
-    
-    
-
-    
-    //#searchKiller représente la liste déroulante des pays, on lui indique de lancer une fonction au changement de choix dans la liste déroulante grâce à ".change(...).
-    $("#searchKiller").keyup(function() {
-        $.ajax({
-
-            //On lui indique le type d'envoie des informations
-            type: 'POST',
-            //On lui indique le chemin de la fonction
-            url:  '{{ path('games_killer_ajaxrqSearchKiller') }}',
-
-            //On lui donne la valeur du choix qu'on a fait, et id est la variable qui va contenir notre valeur, nous la retrouvons dans notre controller
-            data: 'adresse=' + $(this).val(),
-
-            //Enfin nous lui disons de remplir notre formulaire avec le resultat 
-            success: function(response)
-            {
-            	$("#select div").remove();
-                $.each(response, function(i, item) {
-                    
-                	var url = '{{ path("games_killer_consultKiller", {"name": "name"}) }}';
-                	url = url.replace("name", item);  
-                	
-                    $('#select').append(
-                            '<div class="well col-sm-12">'+
-                                '<tr><td><a href="'+url+'">'+item+'<a><td></tr>'+
-                    	    '</div>'
-                    );
-                });
-            }
-        }
-    )});
-    
-    
-    
-
-   
     
 </script>
 {% endblock %}
